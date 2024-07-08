@@ -1,0 +1,77 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:title",
+ "creation": "2024-07-07 08:36:23.299462",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_aktd",
+  "title",
+  "section_break_iqzk",
+  "topic",
+  "column_break_bvmg",
+  "subject"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "unique": 1
+  },
+  {
+   "fetch_from": "topic.subject",
+   "fieldname": "subject",
+   "fieldtype": "Link",
+   "label": "Subject",
+   "options": "Subject",
+   "read_only": 1
+  },
+  {
+   "fieldname": "topic",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Topic",
+   "options": "Topic",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_bvmg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_aktd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_iqzk",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-07 08:53:08.261448",
+ "modified_by": "Administrator",
+ "module": "Metrack",
+ "name": "Sub Topic",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
