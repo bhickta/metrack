@@ -12,15 +12,52 @@ from frappe.model.document import Document
 import frappe.model.utils
 import frappe.model.utils.user_settings
 import frappe.utils
-import ast
+from dataclasses import dataclass
+from metrack.api.scraping.core.insight_ias import QuizScraper
 
 class MCQ(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		a: DF.SmallText | None
+		answer: DF.Literal["", "a", "b", "c", "d", "e", "f"]
+		b: DF.SmallText | None
+		c: DF.SmallText | None
+		d: DF.SmallText | None
+		e: DF.SmallText | None
+		explanation: DF.Text | None
+		f: DF.SmallText | None
+		omr: DF.Literal["", "a", "b", "c", "d", "e", "f"]
+		question: DF.SmallText
+		question_status: DF.Link | None
+		source: DF.Link
+	# end: auto-generated types
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.set_user_settings()
 
 	def validate(self):
 		self.clean()
+		self.check_omr()
+
+	def check_omr(self):
+		if self.omr == self.answer:
+			self.workflow_state = 'Done'
+		else:
+			self.workflow_state = "Not Done"
+		self.omr = None
+		frappe.msgprint(
+			msg=self.workflow_state,
+			title=self.answer,
+			indicator='green' if self.workflow_state == "Done" else "red",
+			as_list=False,
+			alert=True
+		)
 
 	def after_save(self):
 		pass
@@ -66,3 +103,62 @@ class MCQ(Document):
 
 	def navigate_records(self, step):
 		return frappe.desk.form.utils.get_next(self.doctype, self.name, step, self.filters, self.sort_order, self.sort_field)
+
+	@frappe.whitelist()
+	def scrape_insight_ias_quiz(self):
+		print('called')
+		from_date = '2024-08-01'
+		to_date = '2024-08-10'
+		urls = generate_urls(from_date, to_date)
+		print(urls)
+		scraper = QuizScraper()
+		quizzes = scraper.scrape_quiz(urls)
+		for quiz in quizzes:
+			if not quiz:
+				continue
+			for q in quiz:
+				if not frappe.db.exists("Source", q.source):
+					frappe.get_doc({
+						"doctype": "Source",
+						"title": q.source
+					}).insert()
+				frappe.get_doc({
+					"doctype": "MCQ",
+					"question": q.question,
+					"answer": q.answer,
+					"source": q.source,
+					"explanation": q.explanation,
+					"a": q.a,
+					"b": q.b,
+					"c": q.c,
+					"d": q.d,
+					"e": q.e,
+					"f": q.f,
+					'reference': '<html><a href="{0}">Read More</a></html>'.format(q.url),
+				}).insert()
+
+
+from datetime import datetime, timedelta
+
+def generate_urls(from_date_str, to_date_str):
+    urls = []
+    
+    # Parse the input date strings
+    from_date = datetime.strptime(from_date_str, '%Y-%m-%d')
+    to_date = datetime.strptime(to_date_str, '%Y-%m-%d')
+    
+    current_date = from_date
+    
+    while current_date <= to_date:
+        year = current_date.year
+        month = current_date.strftime('%m')
+        day = current_date.strftime('%d')
+        
+        # Construct the URL
+        url = f'https://www.insightsonindia.com/{year}/{month}/{day}/upsc-editorials-quiz-{day}-{month}-{year}/'
+        urls.append(url)
+        
+        # Move to the next day
+        current_date += timedelta(days=1)
+    
+    return urls
