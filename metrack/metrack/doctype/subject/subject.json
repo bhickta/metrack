@@ -1,12 +1,13 @@
 {
  "actions": [],
- "allow_rename": 1,
- "autoname": "field:title",
+ "autoname": "hash",
  "creation": "2024-07-07 08:30:58.469279",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "title"
+  "title",
+  "column_break_yjml",
+  "exam"
  ],
  "fields": [
   {
@@ -14,15 +15,25 @@
    "fieldtype": "Data",
    "label": "Title",
    "unique": 1
+  },
+  {
+   "fieldname": "column_break_yjml",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "exam",
+   "fieldtype": "Link",
+   "label": "Exam",
+   "options": "Exam"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-07 08:34:40.803515",
+ "modified": "2024-08-26 19:36:48.697753",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Subject",
- "naming_rule": "By fieldname",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {
@@ -38,7 +49,9 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "title"
 }

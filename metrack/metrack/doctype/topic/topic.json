@@ -1,21 +1,21 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:title",
+ "autoname": "hash",
  "creation": "2024-07-07 08:35:22.493058",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "title",
   "column_break_znbn",
-  "subject"
+  "subject",
+  "exam"
  ],
  "fields": [
   {
    "fieldname": "title",
-   "fieldtype": "Data",
-   "label": "Title",
-   "unique": 1
+   "fieldtype": "Small Text",
+   "label": "Title"
   },
   {
    "fieldname": "column_break_znbn",
@@ -28,15 +28,22 @@
    "label": "Subject",
    "options": "Subject",
    "reqd": 1
+  },
+  {
+   "fetch_from": "subject.exam",
+   "fieldname": "exam",
+   "fieldtype": "Link",
+   "label": "Exam",
+   "options": "Exam"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-07 08:45:11.227304",
+ "modified": "2024-08-26 19:36:22.278269",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Topic",
- "naming_rule": "By fieldname",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {
@@ -52,7 +59,9 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "title"
 }
