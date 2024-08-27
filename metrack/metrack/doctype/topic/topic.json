@@ -9,7 +9,9 @@
   "title",
   "column_break_znbn",
   "subject",
-  "exam"
+  "subject_title",
+  "exam",
+  "exam_title"
  ],
  "fields": [
   {
@@ -35,11 +37,25 @@
    "fieldtype": "Link",
    "label": "Exam",
    "options": "Exam"
+  },
+  {
+   "fetch_from": "subject.title",
+   "fieldname": "subject_title",
+   "fieldtype": "Data",
+   "label": "Subject Title",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "exam.title",
+   "fieldname": "exam_title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Exam Title"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-26 19:36:22.278269",
+ "modified": "2024-08-26 20:37:35.506494",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Topic",

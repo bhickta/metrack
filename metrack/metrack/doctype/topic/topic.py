@@ -16,7 +16,9 @@ class Topic(Document):
         from frappe.types import DF
 
         exam: DF.Link | None
+        exam_title: DF.Data | None
         subject: DF.Link
+        subject_title: DF.Data | None
         title: DF.SmallText | None
     # end: auto-generated types
     pass
@@ -68,6 +70,8 @@ def create_topics(**kwargs):
                 "title": title,
                 "subject": subject_doc.name,
                 "exam": exam_doc.name,
+                "subject_title": subject_doc.title,
+                "exam_title": exam_doc.title,
             }
         )
         topic.insert()
