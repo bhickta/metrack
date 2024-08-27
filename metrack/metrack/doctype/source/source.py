@@ -3,7 +3,10 @@
 
 # import frappe
 from frappe.model.document import Document
+from metrack.controllers.search_controller import SearchController
 
 
-class Source(Document):
-	pass
+class Source(SearchController):
+	def validate(self):
+		self.get_index()
+		print(self.add_documents())

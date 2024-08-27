@@ -14,8 +14,9 @@ import frappe.model.utils.user_settings
 import frappe.utils
 from dataclasses import dataclass
 from metrack.api.scraping.core.insight_ias import QuizScraper
+from metrack.controllers.search_controller import SearchController
 
-class MCQ(Document):
+class MCQ(SearchController):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -43,7 +44,7 @@ class MCQ(Document):
 
 	def validate(self):
 		self.clean()
-		self.check_omr()
+		# self.check_omr()
 
 	def check_omr(self):
 		if self.omr == self.answer:
