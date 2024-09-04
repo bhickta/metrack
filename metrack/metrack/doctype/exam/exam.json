@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "hash",
+ "autoname": "field:title",
  "creation": "2024-07-07 08:27:11.435531",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -29,11 +29,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-26 19:37:44.198966",
+ "modified": "2024-09-04 23:55:27.984611",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Exam",
- "naming_rule": "Random",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

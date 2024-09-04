@@ -1,0 +1,62 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-04 23:48:40.782483",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "year",
+  "exam",
+  "subjective_question_topic"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Text",
+   "label": "Title"
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Data",
+   "label": "Year",
+   "options": "Year"
+  },
+  {
+   "fieldname": "exam",
+   "fieldtype": "Link",
+   "label": "Exam",
+   "options": "Exam"
+  },
+  {
+   "fieldname": "subjective_question_topic",
+   "fieldtype": "Table",
+   "label": "Subjective Question Topic",
+   "options": "Subjective Question Topic"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-04 23:53:46.138251",
+ "modified_by": "Administrator",
+ "module": "Metrack",
+ "name": "Subjective Question",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

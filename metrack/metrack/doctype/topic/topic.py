@@ -17,9 +17,9 @@ class Topic(Document):
 
         exam: DF.Link | None
         exam_title: DF.Data | None
-        subject: DF.Link
+        subject: DF.Link | None
         subject_title: DF.Data | None
-        title: DF.SmallText | None
+        title: DF.Text | None
     # end: auto-generated types
     pass
 

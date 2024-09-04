@@ -19,13 +19,13 @@ class SearchController(Document):
     
     def create_index(self, index=None):
         if not index:
-            index = self.doctype
+            index = frappe.scrub(self.doctype)
         self.meilisearch_client.create_index(index)
 
     def get_index(self, index: str=None, create: bool=True) -> Optional[Index]:
         out = None
         if not index:
-            index = self.doctype
+            index = frappe.scrub(self.doctype)
         try:
             out = self.meilisearch_client.get_index(index)
         except meilisearch.errors.MeilisearchApiError as e:
@@ -37,12 +37,12 @@ class SearchController(Document):
 
     def delete_index(self, index: str=None):
         if not index:
-            index = self.doctype
+            index = frappe.scrub(self.doctype)
         self.meilisearch_client.delete_index(index)
     
     def add_documents(self, index: str=None, documents: list=[]):
         if not index:
-            index = self.doctype
+            index = frappe.scrub(self.doctype)
         if not documents:
             documents = [self.melisearch_dict or self.as_dict(no_nulls=True)]
         documents[0].update({"id": self.name})
@@ -50,7 +50,7 @@ class SearchController(Document):
     
     def delete_documents(self, index: str=None, documents: list=[]):
         if not index:
-            index = self.doctype
+            index = frappe.scrub(self.doctype)
         if not documents:
             documents.append(self.name)
         self.meilisearch_client.index(index).delete_documents(documents)

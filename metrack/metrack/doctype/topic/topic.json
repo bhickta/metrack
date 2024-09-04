@@ -1,6 +1,5 @@
 {
  "actions": [],
- "allow_rename": 1,
  "autoname": "hash",
  "creation": "2024-07-07 08:35:22.493058",
  "doctype": "DocType",
@@ -16,7 +15,7 @@
  "fields": [
   {
    "fieldname": "title",
-   "fieldtype": "Small Text",
+   "fieldtype": "Text",
    "label": "Title"
   },
   {
@@ -28,8 +27,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Subject",
-   "options": "Subject",
-   "reqd": 1
+   "options": "Subject"
   },
   {
    "fetch_from": "subject.exam",
@@ -55,7 +53,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-26 20:37:35.506494",
+ "modified": "2024-09-05 00:03:07.023981",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Topic",
