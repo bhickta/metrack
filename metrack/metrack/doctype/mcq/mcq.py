@@ -13,7 +13,7 @@ import frappe.model.utils
 import frappe.model.utils.user_settings
 import frappe.utils
 from dataclasses import dataclass
-from metrack.api.scraping.core.insight_ias import QuizScraper
+# from metrack.api.scraping.core.insight_ias import QuizScraper
 from metrack.controllers.search_controller import SearchController
 
 class MCQ(SearchController):
@@ -40,8 +40,16 @@ class MCQ(SearchController):
 	# end: auto-generated types
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.set_user_settings()
+		self.post_init(self)
 
+	def post_init(self, *args, **kwargs):
+		self.set_meilisearch_fields()
+		self.set_user_settings()
+		self.set_meilisearch_dict()
+
+	def set_meilisearch_fields(self):
+		self.melisearch_fields = ["question", "a", "b", "c", "d", "e", "f"]
+ 
 	def validate(self):
 		self.clean()
 		# self.check_omr()
@@ -60,12 +68,15 @@ class MCQ(SearchController):
 			alert=True
 		)
 
-	def after_save(self):
-		pass
+	def validate(self):
+		self.add_documents()
 
 	def clean(self):
 		self.clean_question()
 		self.clean_options()
+
+	def on_trash(self):
+		self.delete_documents()
 
 	def clean_question(self):
 		self.clean_options()
@@ -107,6 +118,7 @@ class MCQ(SearchController):
 
 	@frappe.whitelist()
 	def scrape_insight_ias_quiz(self):
+		return
 		print('called')
 		from_date = '2024-08-01'
 		to_date = '2024-08-10'

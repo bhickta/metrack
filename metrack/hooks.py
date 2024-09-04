@@ -66,14 +66,12 @@ app_license = "mit"
 
 # Installation
 # ------------
-
-# before_install = "metrack.install.before_install"
+before_install = "metrack.overrides.doctype.doctype.before_install"
 # after_install = "metrack.install.after_install"
 
 # Uninstallation
 # ------------
-
-# before_uninstall = "metrack.uninstall.before_uninstall"
+before_uninstall = "metrack.overrides.doctype.doctype.before_uninstall"
 # after_uninstall = "metrack.uninstall.after_uninstall"
 
 # Integration Setup

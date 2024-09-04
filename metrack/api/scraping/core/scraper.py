@@ -40,7 +40,7 @@ class Selenium:
         return self.driver.get(url)
     
 # Instantiate the Selenium class
-selenium = Selenium()
+# selenium = Selenium()
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import element_to_be_clickable as clickable
 from selenium.common.exceptions import TimeoutException
