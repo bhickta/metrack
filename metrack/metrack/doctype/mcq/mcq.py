@@ -33,10 +33,9 @@ class MCQ(SearchController):
 		e: DF.SmallText | None
 		explanation: DF.Text | None
 		f: DF.SmallText | None
-		omr: DF.Literal["", "a", "b", "c", "d", "e", "f"]
 		question: DF.SmallText
 		question_status: DF.Link | None
-		source: DF.Link
+		source: DF.Data | None
 	# end: auto-generated types
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -46,9 +45,12 @@ class MCQ(SearchController):
 		self.set_meilisearch_fields()
 		self.set_user_settings()
 		self.set_meilisearch_dict()
-
+  
 	def set_meilisearch_fields(self):
-		self.melisearch_fields = ["question", "a", "b", "c", "d", "e", "f"]
+		self.melisearch_fields = {
+			"fields": ["question", "a", "b", "c", "d", "e", "f", "answer", "source",],
+			"tables": [],
+		}
  
 	def validate(self):
 		self.clean()
@@ -107,6 +109,7 @@ class MCQ(SearchController):
 
 		
 	def set_user_settings(self):
+		return
 		doctype_user_settings = frappe.model.utils.user_settings.get_user_settings(self.doctype)
 		self.user_settings = self.convert_to_frappe_dict(frappe.json.loads(doctype_user_settings))
 		self.filters = self.user_settings.List.filters

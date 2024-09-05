@@ -26,13 +26,11 @@
  "fields": [
   {
    "fieldname": "source",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "in_filter": 1,
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Source",
-   "options": "Source",
-   "reqd": 1
+   "label": "Source"
   },
   {
    "fieldname": "question",
@@ -115,7 +113,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-08 08:42:10.150734",
+ "modified": "2024-09-05 19:47:18.399300",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",

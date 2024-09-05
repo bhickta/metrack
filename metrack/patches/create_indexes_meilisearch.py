@@ -25,7 +25,7 @@ class MeiliSearchHandler:
 
     def get_doctype_lists(self):
         """Returns the list of doctypes to operate on."""
-        return ["MCQ", "Source", "Subjective_Question"]
+        return ["mcq", "source", "subjective_question"]
 
     def get_action_map(self):
         """Maps actions to corresponding functions."""

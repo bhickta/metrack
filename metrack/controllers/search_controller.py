@@ -9,14 +9,22 @@ class SearchController(Document):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.meilisearch_client = meilisearch.Client("http://meilisearch:7700")
-    
+        
     def set_meilisearch_dict(self):
         if self.melisearch_fields:
-            self.melisearch_dict = {
-                key: value for key, value in self.as_dict(no_nulls=True).items()
-                if key in self.melisearch_fields
-            }
-    
+            self.melisearch_dict = {}
+            for field in self.melisearch_fields["fields"]:
+                if getattr(self, field):
+                    self.melisearch_dict[field] = getattr(self, field)
+            for table in self.melisearch_fields["tables"]:
+                for table_field, fields in table.items():
+                    if table_field not in self.melisearch_dict:
+                        self.melisearch_dict[table_field] = []
+                    for item in getattr(self, table_field):
+                        for field in fields:
+                            if getattr(item, field):
+                                self.melisearch_dict[table_field].append({field: getattr(item, field)})
+
     def create_index(self, index=None):
         if not index:
             index = frappe.scrub(self.doctype)
