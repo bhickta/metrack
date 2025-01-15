@@ -16,6 +16,7 @@ class SubjectiveQuestion(Document):
         from metrack.metrack.doctype.subjective_question_topic.subjective_question_topic import SubjectiveQuestionTopic
 
         exam: DF.Link | None
+        naming_series: DF.Literal["Q-.#."]
         source: DF.Data | None
         subjective_question_topic: DF.Table[SubjectiveQuestionTopic]
         title: DF.Text | None
