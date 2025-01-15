@@ -30,16 +30,7 @@ class SubjectiveQuestion(Document):
         self.post_init(self)
 
     def post_init(self, *args, **kwargs):
-        self.set_meilisearch_fields()
-
-    def set_meilisearch_fields(self):
-        self.melisearch_fields = {
-            "fields": ["exam", "title", "year",],
-            "tables": [
-                {"subjective_question_topic": ["topic_title"]},
-            ],
-        }
+        pass
 
     def validate(self):
-        self.set_meilisearch_dict()
-        self.add_documents()
+        pass
