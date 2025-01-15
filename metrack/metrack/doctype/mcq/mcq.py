@@ -14,9 +14,8 @@ import frappe.model.utils.user_settings
 import frappe.utils
 from dataclasses import dataclass
 # from metrack.api.scraping.core.insight_ias import QuizScraper
-from metrack.controllers.search_controller import SearchController
 
-class MCQ(SearchController):
+class MCQ(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 

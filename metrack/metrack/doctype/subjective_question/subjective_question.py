@@ -3,10 +3,9 @@
 
 import frappe
 from frappe.model.document import Document
-from metrack.controllers.search_controller import SearchController
 
 
-class SubjectiveQuestion(SearchController):
+class SubjectiveQuestion(Document):
     # begin: auto-generated types
     # This code is auto-generated. Do not modify anything in this block.
 
