@@ -25,7 +25,12 @@
   {
    "fieldname": "title",
    "fieldtype": "Text",
-   "label": "Title"
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Title",
+   "reqd": 1
   },
   {
    "fieldname": "year",
@@ -89,7 +94,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-15 23:23:20.828943",
+ "modified": "2025-01-15 23:37:00.365427",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Subjective Question",
@@ -109,7 +114,9 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "title"
 }

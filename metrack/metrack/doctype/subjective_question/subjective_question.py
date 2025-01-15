@@ -19,7 +19,7 @@ class SubjectiveQuestion(Document):
         naming_series: DF.Literal["Q-.#."]
         source: DF.Data | None
         subjective_question_topic: DF.Table[SubjectiveQuestionTopic]
-        title: DF.Text | None
+        title: DF.Text
         url: DF.Data | None
         year: DF.Data | None
     # end: auto-generated types
