@@ -13,13 +13,13 @@ class SubjectiveQuestion(Document):
 
     if TYPE_CHECKING:
         from frappe.types import DF
-        from metrack.metrack.doctype.subjective_question_topic.subjective_question_topic import (
-            SubjectiveQuestionTopic,
-        )
+        from metrack.metrack.doctype.subjective_question_topic.subjective_question_topic import SubjectiveQuestionTopic
 
         exam: DF.Link | None
+        source: DF.Data | None
         subjective_question_topic: DF.Table[SubjectiveQuestionTopic]
         title: DF.Text | None
+        url: DF.Data | None
         year: DF.Data | None
     # end: auto-generated types
     pass

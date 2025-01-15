@@ -6,8 +6,15 @@
  "engine": "InnoDB",
  "field_order": [
   "title",
+  "section_break_ctjc",
+  "url",
+  "column_break_dgwk",
+  "source",
+  "section_break_rfgp",
   "year",
+  "column_break_lqxo",
   "exam",
+  "section_break_snej",
   "subjective_question_topic"
  ],
  "fields": [
@@ -33,11 +40,41 @@
    "fieldtype": "Table",
    "label": "Subjective Question Topic",
    "options": "Subjective Question Topic"
+  },
+  {
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "label": "Url"
+  },
+  {
+   "fieldname": "section_break_rfgp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_lqxo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_snej",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_ctjc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_dgwk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Data",
+   "label": "Source"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-04 23:53:46.138251",
+ "modified": "2025-01-15 23:16:57.672381",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Subjective Question",
