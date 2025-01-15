@@ -52,7 +52,7 @@
   },
   {
    "fieldname": "url",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Url"
   },
   {
@@ -94,7 +94,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-15 23:37:00.365427",
+ "modified": "2025-01-15 23:40:36.692555",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Subjective Question",

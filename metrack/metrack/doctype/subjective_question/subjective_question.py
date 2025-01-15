@@ -20,7 +20,7 @@ class SubjectiveQuestion(Document):
         source: DF.Data | None
         subjective_question_topic: DF.Table[SubjectiveQuestionTopic]
         title: DF.Text
-        url: DF.Data | None
+        url: DF.SmallText | None
         year: DF.Data | None
     # end: auto-generated types
     pass
