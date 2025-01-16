@@ -1,7 +1,7 @@
 // Copyright (c) 2025, nishantbhickta and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Topic", {
+// frappe.ui.form.on("Subtheme", {
 // 	refresh(frm) {
 
 // 	},

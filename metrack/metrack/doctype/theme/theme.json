@@ -2,12 +2,11 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:title",
- "creation": "2024-07-07 08:30:58.469279",
+ "creation": "2025-01-16 18:41:56.613010",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "title",
-  "column_break_yjml"
+  "title"
  ],
  "fields": [
   {
@@ -15,18 +14,14 @@
    "fieldtype": "Data",
    "label": "Title",
    "unique": 1
-  },
-  {
-   "fieldname": "column_break_yjml",
-   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-16 18:40:38.783089",
+ "modified": "2025-01-16 18:42:14.713866",
  "modified_by": "Administrator",
  "module": "Metrack",
- "name": "Subject",
+ "name": "Theme",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
@@ -43,9 +38,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "title"
+ "states": []
 }

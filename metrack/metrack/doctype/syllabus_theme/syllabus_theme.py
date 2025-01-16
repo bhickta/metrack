@@ -5,7 +5,7 @@
 from frappe.model.document import Document
 
 
-class Topic(Document):
+class SyllabusTheme(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -14,6 +14,11 @@ class Topic(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		title: DF.Data | None
+		naming_series: DF.Literal["UT-.####."]
+		section: DF.Link | None
+		subject: DF.Link | None
+		subtheme: DF.Link | None
+		theme: DF.Link | None
+		topic: DF.Link | None
 	# end: auto-generated types
 	pass

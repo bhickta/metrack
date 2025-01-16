@@ -5,7 +5,7 @@
 from frappe.model.document import Document
 
 
-class SubjectiveQuestionTopic(Document):
+class SubjectiveQuestionTheme(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -17,7 +17,6 @@ class SubjectiveQuestionTopic(Document):
 		parent: DF.Data
 		parentfield: DF.Data
 		parenttype: DF.Data
-		topic: DF.Link | None
-		topic_title: DF.Text | None
+		syllabus_theme: DF.Link
 	# end: auto-generated types
 	pass

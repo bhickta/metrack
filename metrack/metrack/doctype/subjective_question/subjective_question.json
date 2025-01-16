@@ -23,6 +23,7 @@
  ],
  "fields": [
   {
+   "columns": 8,
    "fieldname": "title",
    "fieldtype": "Text",
    "in_filter": 1,
@@ -47,8 +48,8 @@
   {
    "fieldname": "subjective_question_topic",
    "fieldtype": "Table",
-   "label": "Subjective Question Topic",
-   "options": "Subjective Question Topic"
+   "label": "Subjective Question Theme",
+   "options": "Subjective Question Theme"
   },
   {
    "fieldname": "url",
@@ -94,7 +95,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-15 23:40:36.692555",
+ "modified": "2025-01-16 20:25:24.958195",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Subjective Question",

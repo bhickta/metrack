@@ -1,63 +1,28 @@
 {
  "actions": [],
- "autoname": "hash",
- "creation": "2024-07-07 08:35:22.493058",
+ "allow_rename": 1,
+ "autoname": "field:title",
+ "creation": "2025-01-16 18:43:52.352158",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "title",
-  "column_break_znbn",
-  "subject",
-  "subject_title",
-  "exam",
-  "exam_title"
+  "title"
  ],
  "fields": [
   {
    "fieldname": "title",
-   "fieldtype": "Text",
-   "label": "Title"
-  },
-  {
-   "fieldname": "column_break_znbn",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "subject",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Subject",
-   "options": "Subject"
-  },
-  {
-   "fetch_from": "subject.exam",
-   "fieldname": "exam",
-   "fieldtype": "Link",
-   "label": "Exam",
-   "options": "Exam"
-  },
-  {
-   "fetch_from": "subject.title",
-   "fieldname": "subject_title",
    "fieldtype": "Data",
-   "label": "Subject Title",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "exam.title",
-   "fieldname": "exam_title",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Exam Title"
+   "label": "Title",
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-05 00:03:07.023981",
+ "modified": "2025-01-16 18:44:10.030488",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Topic",
- "naming_rule": "Random",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -73,9 +38,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "title"
+ "states": []
 }

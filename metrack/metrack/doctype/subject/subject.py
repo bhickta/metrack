@@ -14,7 +14,6 @@ class Subject(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		exam: DF.Link | None
 		title: DF.Data | None
 	# end: auto-generated types
 	pass
