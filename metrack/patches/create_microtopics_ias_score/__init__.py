@@ -1,7 +1,5 @@
 import frappe
 
-import frappe.public
-
 def execute():
     # Get file details
     file_doc = frappe.get_doc("File", {"file_url": "/files/microtopics.json"})
@@ -33,3 +31,4 @@ def execute():
         }
         doc.update(new_theme)
         doc.save()
+    frappe.throw('eheh')
