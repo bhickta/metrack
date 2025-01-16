@@ -17,6 +17,11 @@ class SubjectiveQuestionTheme(Document):
 		parent: DF.Data
 		parentfield: DF.Data
 		parenttype: DF.Data
+		section: DF.Link | None
+		subject: DF.Link | None
+		subtheme: DF.Link | None
 		syllabus_theme: DF.Link
+		theme: DF.Link | None
+		topic: DF.Link | None
 	# end: auto-generated types
 	pass

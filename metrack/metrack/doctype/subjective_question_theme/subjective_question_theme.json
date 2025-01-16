@@ -6,11 +6,17 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "syllabus_theme"
+  "syllabus_theme",
+  "section",
+  "topic",
+  "column_break_icji",
+  "subject",
+  "theme",
+  "subtheme"
  ],
  "fields": [
   {
-   "columns": 4,
+   "columns": 1,
    "fieldname": "syllabus_theme",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -18,12 +24,71 @@
    "label": "Syllabus Theme",
    "options": "Syllabus Theme",
    "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fetch_from": "syllabus_theme.section",
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Section",
+   "options": "Section",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fetch_from": "syllabus_theme.topic",
+   "fieldname": "topic",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Topic",
+   "options": "Topic",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_icji",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 1,
+   "fetch_from": "syllabus_theme.subject",
+   "fieldname": "subject",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Subject",
+   "options": "Subject",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fetch_from": "syllabus_theme.theme",
+   "fieldname": "theme",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Theme",
+   "options": "Theme",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fetch_from": "syllabus_theme.subtheme",
+   "fieldname": "subtheme",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Subtheme",
+   "options": "Subtheme",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-01-16 20:24:26.393742",
+ "modified": "2025-01-16 20:55:43.616449",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Subjective Question Theme",
