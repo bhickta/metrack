@@ -31,4 +31,3 @@ def execute():
         }
         doc.update(new_theme)
         doc.save()
-    frappe.throw('eheh')
