@@ -18,6 +18,7 @@ class SubjectiveQuestion(Document):
         exam: DF.Link | None
         naming_series: DF.Literal["Q-.#."]
         source: DF.Data | None
+        status: DF.Literal["Untouched", "Read", "Brainstormed", "Written"]
         subjective_question_topic: DF.Table[SubjectiveQuestionTheme]
         title: DF.Text
         url: DF.SmallText | None
@@ -34,3 +35,9 @@ class SubjectiveQuestion(Document):
 
     def validate(self):
         pass
+
+    def onload(self):
+        if self.status != "Read":
+            self.status = "Read"
+            self.save(ignore_permissions=True)
+            frappe.db.commit()
