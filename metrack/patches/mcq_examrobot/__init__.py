@@ -2,6 +2,7 @@ import frappe
 json = frappe.json
 
 def execute():
+    frappe.db.sql("DELETE FROM `tabMCQ`")
     data = frappe.get_doc("File", {"file_url": "/files/examrobot.json"}).get_content()
     questions = json.loads(data)
     for question in questions:
@@ -19,6 +20,7 @@ def execute():
             "subject": question.get("subject"),
             "metadata": str(question.get("metadata")),
             "answer": value_key_map.get(question.get("correct_option")),
+            "explanation": question.get("explanation"),
             "source": "Examrobot",
         }
         options = question.get("options")
