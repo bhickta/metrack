@@ -37,7 +37,7 @@ class Prelims(Document):
 		query = f"""
 			SELECT mcq.name, mcq.answer
 			FROM `tabMCQ` mcq
-			WHERE {" AND ".join(query_conditions)}
+			WHERE {" OR ".join(query_conditions)}
 		"""
 		
 		values = [f"%{topic}%" for topic in topics for _ in fields]
