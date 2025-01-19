@@ -15,8 +15,8 @@ frappe.ui.form.on("MCQ", {
     // },
 
     refresh(frm) {
-        let mcq = new MCQ(frm);
-        mcq.set_custom_buttons()
+        // let mcq = new MCQ(frm);
+        // mcq.set_custom_buttons()
     }
 });
 

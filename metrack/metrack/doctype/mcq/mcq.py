@@ -32,28 +32,22 @@ class MCQ(Document):
 		e: DF.SmallText | None
 		explanation: DF.Text | None
 		f: DF.SmallText | None
+		metadata: DF.Text | None
+		naming_series: DF.Literal["MCQ-.#."]
 		question: DF.SmallText
 		question_status: DF.Link | None
 		source: DF.Data | None
+		subject: DF.Data | None
 	# end: auto-generated types
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.post_init(self)
 
 	def post_init(self, *args, **kwargs):
-		self.set_meilisearch_fields()
 		self.set_user_settings()
-		self.set_meilisearch_dict()
   
-	def set_meilisearch_fields(self):
-		self.melisearch_fields = {
-			"fields": ["question", "a", "b", "c", "d", "e", "f", "answer", "source",],
-			"tables": [],
-		}
- 
 	def validate(self):
 		self.clean()
-		# self.check_omr()
 
 	def check_omr(self):
 		if self.omr == self.answer:
@@ -70,14 +64,14 @@ class MCQ(Document):
 		)
 
 	def validate(self):
-		self.add_documents()
+		pass
 
 	def clean(self):
 		self.clean_question()
 		self.clean_options()
 
 	def on_trash(self):
-		self.delete_documents()
+		pass
 
 	def clean_question(self):
 		self.clean_options()

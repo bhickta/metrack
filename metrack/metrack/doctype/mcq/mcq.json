@@ -1,11 +1,15 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "hash",
+ "autoname": "naming_series:",
  "creation": "2024-07-07 13:50:44.925470",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
+  "column_break_lope",
+  "subject",
+  "section_break_qxqd",
   "question",
   "options_section",
   "a",
@@ -21,7 +25,8 @@
   "question_status",
   "section_break_cjzy",
   "explanation",
-  "source"
+  "source",
+  "metadata"
  ],
  "fields": [
   {
@@ -109,15 +114,41 @@
    "fieldtype": "Link",
    "label": "Question Status",
    "options": "Workflow State"
+  },
+  {
+   "default": "MCQ-.#.",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "MCQ-.#."
+  },
+  {
+   "fieldname": "metadata",
+   "fieldtype": "Text",
+   "label": "Metadata",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_lope",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "label": "Subject"
+  },
+  {
+   "fieldname": "section_break_qxqd",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-05 19:47:18.399300",
+ "modified": "2025-01-19 13:42:12.375706",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",
- "naming_rule": "Random",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
