@@ -40,15 +40,13 @@
   {
    "fieldname": "question",
    "fieldtype": "Small Text",
-   "label": "Question",
-   "reqd": 1
+   "label": "Question"
   },
   {
    "fieldname": "answer",
    "fieldtype": "Select",
    "label": "Answer",
-   "options": "\na\nb\nc\nd\ne\nf",
-   "reqd": 1
+   "options": "\na\nb\nc\nd\ne\nf"
   },
   {
    "fieldname": "options_section",
@@ -144,7 +142,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-19 13:42:12.375706",
+ "modified": "2025-01-19 15:03:34.630041",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",

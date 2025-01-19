@@ -34,7 +34,7 @@ class MCQ(Document):
 		f: DF.SmallText | None
 		metadata: DF.Text | None
 		naming_series: DF.Literal["MCQ-.#."]
-		question: DF.SmallText
+		question: DF.SmallText | None
 		question_status: DF.Link | None
 		source: DF.Data | None
 		subject: DF.Data | None

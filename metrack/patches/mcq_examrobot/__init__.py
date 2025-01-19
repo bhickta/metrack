@@ -19,10 +19,12 @@ def execute():
             "subject": question.get("subject"),
             "metadata": str(question.get("metadata")),
             "answer": value_key_map.get(question.get("correct_option")),
+            "source": "Examrobot",
         }
         options = question.get("options")
-        for i in range(len(options)):
-            key = value_key_map.get(str(i + 1))
-            new_question[key] = options[i].get("label")
+        if options:
+            for i in range(len(options)):
+                key = value_key_map.get(str(i + 1))
+                new_question[key] = options[i].get("label")
         doc.update(new_question)
         doc.save()
