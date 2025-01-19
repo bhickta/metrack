@@ -1,0 +1,86 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:topic",
+ "creation": "2024-08-30 09:50:09.111086",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "question_container",
+  "section_break_aqzp",
+  "topic",
+  "column_break_hyfw",
+  "section_break_epcv",
+  "items",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "topic",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Topic",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_hyfw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_epcv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Prelims Items"
+  },
+  {
+   "fieldname": "question_container",
+   "fieldtype": "HTML",
+   "label": "Question Container"
+  },
+  {
+   "fieldname": "section_break_aqzp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Prelims",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-01-19 19:32:49.069726",
+ "modified_by": "Administrator",
+ "module": "Metrack",
+ "name": "Prelims",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
