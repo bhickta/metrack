@@ -13,6 +13,23 @@ class QuizManager {
         this.filteredItems = this.items; // Initially show all items
         this.navigationFilters = new NavigationFilters(frm, this);  // Pass the QuizManager instance to NavigationFilters
         this.navigationPanel = new NavigationPanel(this);  // Initialize the NavigationPanel
+        this.injectCSS();
+    }
+
+    injectCSS() {
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .correct-answer {
+                background-color: #28a745; /* Green for correct answer */
+                color: white;
+            }
+
+            .selected-answer {
+                background-color: #007bff; /* Blue for selected answer */
+                color: white;
+            }
+        `;
+        document.head.appendChild(style);
     }
 
     startQuiz() {
@@ -57,10 +74,10 @@ class QuizManager {
                 <p>Question ID: ${question.name} | ${question.subject}</p>
                 <p>${question.question}</p>
                 <div>
-                    <label><input type="radio" name="answer" value="A"> A: ${question.a}</label><br>
-                    <label><input type="radio" name="answer" value="B"> B: ${question.b}</label><br>
-                    <label><input type="radio" name="answer" value="C"> C: ${question.c}</label><br>
-                    <label><input type="radio" name="answer" value="D"> D: ${question.d}</label>
+                    <label><input type="radio" name="answer" value="a" class="answer-option" data-option="a"> a: ${question.a}</label><br>
+                    <label><input type="radio" name="answer" value="b" class="answer-option" data-option="b"> b: ${question.b}</label><br>
+                    <label><input type="radio" name="answer" value="c" class="answer-option" data-option="c"> c: ${question.c}</label><br>
+                    <label><input type="radio" name="answer" value="d" class="answer-option" data-option="d"> d: ${question.d}</label>
                 </div>
                 <button class="btn btn-secondary show-explanation-btn">Show Explanation</button>
                 <button class="btn btn-secondary prev-btn" ${questionIndex === 0 ? "disabled" : ""}>Previous</button>
@@ -91,6 +108,19 @@ class QuizManager {
     }
 
     showExplanation(question) {
+        const $container = $(this.frm.fields_dict.question_container.wrapper);
+        const selectedAnswer = $("input[name='answer']:checked").val()?.toUpperCase();
+
+        const correctOption = question.correct_answer; // Assuming correct option is stored in question data
+        console.log(correctOption);
+        $container.find(`input[data-option='${correctOption}']`).closest('label').addClass('correct-answer');
+
+        // Mark the selected answer
+        if (selectedAnswer) {
+            $container.find(`input[data-option='${selectedAnswer}']`).closest('label').addClass('selected-answer');
+        }
+
+        // Optionally, show explanation if available
         frappe.msgprint(question.explanation);
     }
 
