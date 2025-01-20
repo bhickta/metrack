@@ -37,7 +37,7 @@ class SubjectiveQuestion(Document):
         pass
 
     def onload(self):
-        if self.status != "Read":
+        if self.status != "Read" and self.status not in ["Brainstormed", "Written"]:
             self.status = "Read"
             self.save(ignore_permissions=True)
             frappe.db.commit()
