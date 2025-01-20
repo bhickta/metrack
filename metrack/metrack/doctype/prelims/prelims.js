@@ -1,7 +1,7 @@
 frappe.ui.form.on("Prelims", {
     refresh(frm) {
         const quizManager = new QuizManager(frm);
-        quizManager.startQuiz()
+        quizManager.startQuiz();
     },
 });
 
@@ -10,15 +10,19 @@ class QuizManager {
         this.frm = frm;
         this.items = frm.doc.items;
         this.currentQuestionIndex = 0;
+        this.filteredItems = this.items; // Initially show all items
+        this.navigationFilters = new NavigationFilters(frm, this);  // Pass the QuizManager instance to NavigationFilters
+        this.navigationPanel = new NavigationPanel(this);  // Initialize the NavigationPanel
     }
 
     startQuiz() {
         this.currentQuestionIndex = 0;
         this.fetchAndDisplayQuestion(this.currentQuestionIndex);
+        this.navigationPanel.render();  // Render the navigation panel
     }
 
     fetchAndDisplayQuestion(questionIndex) {
-        const questionName = this.items[questionIndex].question;
+        const questionName = this.filteredItems[questionIndex].question;
         this.fetchQuestionData(questionName, (question) => {
             this.currentQuestionIndex = questionIndex;
             this.renderQuestion(question, questionIndex);
@@ -40,7 +44,7 @@ class QuizManager {
     }
 
     renderQuestion(question, questionIndex) {
-        const totalQuestions = this.items.length;
+        const totalQuestions = this.filteredItems.length;
         const $container = this.frm.fields_dict.question_container.wrapper;
         $container.innerHTML = this.getQuestionHTML(question, questionIndex, totalQuestions);
         this.attachNavigationListeners(question, questionIndex, totalQuestions);
@@ -80,7 +84,7 @@ class QuizManager {
     navigateQuestion(question, newIndex) {
         const selectedAnswer = $("input[name='answer']:checked").val()?.toLowerCase();
         if (selectedAnswer) {
-            const currentQuestion = this.items[this.currentQuestionIndex];
+            const currentQuestion = this.filteredItems[this.currentQuestionIndex];
             this.updateItemAnswer(currentQuestion, selectedAnswer);
         }
         this.fetchAndDisplayQuestion(newIndex);
@@ -98,7 +102,7 @@ class QuizManager {
     submitQuestion() {
         const selectedAnswer = $("input[name='answer']:checked").val()?.toLowerCase();
         if (selectedAnswer) {
-            const currentQuestion = this.items[this.currentQuestionIndex];
+            const currentQuestion = this.filteredItems[this.currentQuestionIndex];
             this.updateItemAnswer(currentQuestion, selectedAnswer);
         }
         this.updateQuestionCounter();
@@ -109,7 +113,143 @@ class QuizManager {
 
     updateQuestionCounter() {
         const answeredItems = this.frm.doc.items.filter(item => item.answer).length;
-        const totalQuestions = this.items.length;
+        const totalQuestions = this.filteredItems.length;
         this.frm.fields_dict.question_container.wrapper.innerHTML += `<div>Answered: ${answeredItems}/${totalQuestions}</div>`;
+    }
+
+    refreshNavigationPanel() {
+        this.navigationPanel.refresh();
+    }
+}
+
+
+class NavigationPanel {
+    constructor(quizManager) {
+        this.quizManager = quizManager;
+        this.panelContainer = null;
+    }
+
+    render() {
+        this.panelContainer = this.createNavigationPanelContainer();
+
+        this.quizManager.filteredItems.forEach((item, index) => {
+            const $btn = this.createNavigationButton(item, index);
+            this.panelContainer.append($btn);
+        });
+
+        $("body").append(this.panelContainer);
+        this.quizManager.navigationFilters.renderFilters(this.panelContainer);
+    }
+
+    createNavigationPanelContainer() {
+        return $("<div>").addClass("quiz-navigation-panel").css({
+            position: "fixed",
+            right: "20px",       
+            top: "50px",         
+            width: "180px",      
+            padding: "10px",
+            background: "#f8f9fa",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            zIndex: 999,
+            maxHeight: "calc(100vh - 100px)",
+            overflowY: "auto"
+        });
+    }
+
+    createNavigationButton(item, index) {
+        const $btn = $("<button>")
+            .addClass("btn question-nav-btn")
+            .text(`Q${index + 1}`)
+            .data("index", index)
+            .css({
+                width: "100%",
+                marginBottom: "5px",
+                textAlign: "left",
+                padding: "8px",
+                fontSize: "14px",
+                backgroundColor: item.answer ? "green" : "blue",  // Color code based on 'answer'
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+            })
+            .on("click", () => this.quizManager.navigateQuestion(item, index));
+
+        return $btn;
+    }
+
+    refresh() {
+        $(".quiz-navigation-panel").remove();  // Remove old panel
+        this.render();  // Re-render the panel with filtered items
+    }
+}
+
+
+class NavigationFilters {
+    constructor(frm, quizManager) {
+        this.frm = frm;
+        this.quizManager = quizManager;
+        this.filters = {};
+    }
+    renderFilters($panelContainer) {
+        const $filterContainer = $("<div>").css({
+            marginBottom: "15px",
+            fontSize: "14px"
+        });
+
+        // Filter for attempted questions
+        const $attemptedFilter = $("<button>")
+            .addClass("btn btn-outline-success filter-btn")
+            .text("Attempted")
+            .on("click", () => this.filterQuestions("attempted"));
+
+        // Filter for not attempted questions
+        const $notAttemptedFilter = $("<button>")
+            .addClass("btn btn-outline-danger filter-btn")
+            .text("Not Attempted")
+            .on("click", () => this.filterQuestions("not_attempted"));
+
+        // Filter for right answers
+        const $rightFilter = $("<button>")
+            .addClass("btn btn-outline-success filter-btn")
+            .text("Right")
+            .on("click", () => this.filterQuestions("right"));
+
+        // Filter for wrong answers
+        const $wrongFilter = $("<button>")
+            .addClass("btn btn-outline-danger filter-btn")
+            .text("Wrong")
+            .on("click", () => this.filterQuestions("wrong"));
+
+        // Filter for skipped answers
+        const $skipFilter = $("<button>")
+            .addClass("btn btn-outline-secondary filter-btn")
+            .text("Skipped")
+            .on("click", () => this.filterQuestions("skip"));
+
+        // Add filters to filter container
+        $filterContainer.append($attemptedFilter, $notAttemptedFilter, $rightFilter, $wrongFilter, $skipFilter);
+        $panelContainer.prepend($filterContainer);
+    }
+
+    filterQuestions(type) {
+        if (type === "attempted") {
+            this.quizManager.filteredItems = this.quizManager.items.filter(item => item.answer);
+        } else if (type === "not_attempted") {
+            this.quizManager.filteredItems = this.quizManager.items.filter(item => !item.answer);
+        } else if (type === "right") {
+            this.quizManager.filteredItems = this.quizManager.items.filter(item => item.check === "Right");
+        } else if (type === "wrong") {
+            this.quizManager.filteredItems = this.quizManager.items.filter(item => item.check === "Wrong");
+        } else if (type === "skip") {
+            this.quizManager.filteredItems = this.quizManager.items.filter(item => item.check === "Skip");
+        } else {
+            this.quizManager.filteredItems = this.quizManager.items;
+        }
+
+        // Refresh the navigation panel to reflect the filtered items
+        this.quizManager.refreshNavigationPanel();
+        this.quizManager.fetchAndDisplayQuestion(0);  // Display the first question of the filtered list
     }
 }
