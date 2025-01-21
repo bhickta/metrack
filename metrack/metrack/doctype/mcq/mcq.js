@@ -3,18 +3,80 @@
 
 frappe.ui.form.on('MCQ', {
     refresh(frm) {
-        // Add a custom button
         frm.add_custom_button(__('Open All URLs'), () => {
-            // Iterate through the 'Urls' child table
             (frm.doc.urls || []).forEach(row => {
                 if (row.url) {
-                    // Open each URL in a new tab
                     window.open(row.url, '_blank');
                 }
             });
-        }, __('Actions')); // You can group it under "Actions" or any other label
+        }, __('Actions'));
+
+        let timerDuration = 180;
+        let timerElement = frm.dashboard.add_section(`<div id="mcq-timer" style="font-weight: bold; color: red;">Time left: ${formatTime(timerDuration)}</div>`);
+
+        const timerInterval = setInterval(() => {
+            timerDuration--;
+            const timerDisplay = document.getElementById('mcq-timer');
+            if (timerDisplay) {
+                timerDisplay.textContent = `Time left: ${formatTime(timerDuration)}`;
+            }
+
+            if (timerDuration <= 0) {
+                clearInterval(timerInterval);
+                triggerNextQuestion(frm);
+            }
+        }, 1000);
+
+        frm.add_custom_button(
+            __('Next'),
+            () => {
+                triggerNextQuestion(frm);
+            },
+            __('Actions')
+        ).addClass('btn-primary');
     }
 });
+
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+function triggerNextQuestion(frm) {
+    frappe.confirm(
+        __('Are you sure you want to move to the next question?'),
+        () => {
+            const nextDocButton = $('.next-doc');
+            nextDocButton.click();
+        },
+        () => {
+            // If the user clicks "No", reset the timer to 60 seconds
+            resetTimer(frm);
+        }
+    );
+}
+
+function resetTimer(frm) {
+    let timerDuration = 60;
+    const timerDisplay = document.getElementById('mcq-timer');
+    if (timerDisplay) {
+        timerDisplay.textContent = `Time left: ${formatTime(timerDuration)}`;
+    }
+
+    const timerInterval = setInterval(() => {
+        timerDuration--;
+        if (timerDisplay) {
+            timerDisplay.textContent = `Time left: ${formatTime(timerDuration)}`;
+        }
+
+        if (timerDuration <= 0) {
+            clearInterval(timerInterval);
+            triggerNextQuestion(frm);
+        }
+    }, 1000);
+}
+
 
 
 class MCQ {
