@@ -6,11 +6,13 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "input_urls",
   "naming_series",
   "column_break_lope",
   "subject",
   "section_break_qxqd",
   "question",
+  "edit",
   "options_section",
   "a",
   "c",
@@ -26,6 +28,7 @@
   "section_break_cjzy",
   "explanation",
   "source",
+  "urls",
   "metadata"
  ],
  "fields": [
@@ -40,13 +43,15 @@
   {
    "fieldname": "question",
    "fieldtype": "Small Text",
-   "label": "Question"
+   "label": "Question",
+   "read_only_depends_on": "eval: !doc.edit"
   },
   {
    "fieldname": "answer",
    "fieldtype": "Select",
    "label": "Answer",
-   "options": "\na\nb\nc\nd\ne\nf"
+   "options": "\na\nb\nc\nd\ne\nf",
+   "read_only_depends_on": "eval: !doc.edit"
   },
   {
    "fieldname": "options_section",
@@ -56,17 +61,20 @@
   {
    "fieldname": "a",
    "fieldtype": "Small Text",
-   "label": "A"
+   "label": "A",
+   "read_only_depends_on": "eval: !doc.edit"
   },
   {
    "fieldname": "c",
    "fieldtype": "Small Text",
-   "label": "C"
+   "label": "C",
+   "read_only_depends_on": "eval: !doc.edit"
   },
   {
    "fieldname": "e",
    "fieldtype": "Small Text",
-   "label": "E"
+   "label": "E",
+   "read_only_depends_on": "eval: !doc.edit"
   },
   {
    "fieldname": "column_break_ojve",
@@ -75,17 +83,20 @@
   {
    "fieldname": "b",
    "fieldtype": "Small Text",
-   "label": "B"
+   "label": "B",
+   "read_only_depends_on": "eval: !doc.edit"
   },
   {
    "fieldname": "d",
    "fieldtype": "Small Text",
-   "label": "D"
+   "label": "D",
+   "read_only_depends_on": "eval: !doc.edit"
   },
   {
    "fieldname": "f",
    "fieldtype": "Small Text",
-   "label": "F"
+   "label": "F",
+   "read_only_depends_on": "eval: !doc.edit"
   },
   {
    "fieldname": "section_break_cjzy",
@@ -101,7 +112,7 @@
    "fieldname": "explanation",
    "fieldtype": "Text",
    "label": "Explanation",
-   "read_only": 1
+   "read_only_depends_on": "eval: !doc.edit"
   },
   {
    "fieldname": "column_break_mswr",
@@ -138,11 +149,28 @@
   {
    "fieldname": "section_break_qxqd",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "edit",
+   "fieldtype": "Check",
+   "label": "Edit"
+  },
+  {
+   "fieldname": "urls",
+   "fieldtype": "Table",
+   "label": "Urls",
+   "options": "Urls"
+  },
+  {
+   "fieldname": "input_urls",
+   "fieldtype": "Small Text",
+   "label": "Input Urls"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-19 15:03:34.630041",
+ "modified": "2025-01-21 19:11:56.679052",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",
@@ -174,8 +202,5 @@
    "title": "Not Done"
   }
  ],
- "title_field": "source",
- "track_changes": 1,
- "track_seen": 1,
- "track_views": 1
+ "title_field": "source"
 }

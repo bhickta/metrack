@@ -1,24 +1,21 @@
 // Copyright (c) 2024, nishantbhickta and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("MCQ", {
-    // question_status(frm) {
-    //     console.log("hte")
-    //     let cleanmcq = new MCQ(frm);
-    //     let state;
-    //     if (frm.doc.workflow_state == "Done") {
-    //         state = 'done';
-    //     } else {
-    //         state = 'not-done';
-    //     }
-    //     cleanmcq.run({ state });
-    // },
-
+frappe.ui.form.on('MCQ', {
     refresh(frm) {
-        // let mcq = new MCQ(frm);
-        // mcq.set_custom_buttons()
+        // Add a custom button
+        frm.add_custom_button(__('Open All URLs'), () => {
+            // Iterate through the 'Urls' child table
+            (frm.doc.urls || []).forEach(row => {
+                if (row.url) {
+                    // Open each URL in a new tab
+                    window.open(row.url, '_blank');
+                }
+            });
+        }, __('Actions')); // You can group it under "Actions" or any other label
     }
 });
+
 
 class MCQ {
     constructor(frm) {

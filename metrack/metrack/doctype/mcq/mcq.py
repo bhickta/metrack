@@ -12,6 +12,7 @@ from frappe.model.document import Document
 import frappe.model.utils
 import frappe.model.utils.user_settings
 import frappe.utils
+import re
 from dataclasses import dataclass
 # from metrack.api.scraping.core.insight_ias import QuizScraper
 
@@ -23,6 +24,7 @@ class MCQ(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
+		from metrack.metrack.doctype.urls.urls import Urls
 
 		a: DF.SmallText | None
 		answer: DF.Literal["", "a", "b", "c", "d", "e", "f"]
@@ -30,25 +32,51 @@ class MCQ(Document):
 		c: DF.SmallText | None
 		d: DF.SmallText | None
 		e: DF.SmallText | None
+		edit: DF.Check
 		explanation: DF.Text | None
 		f: DF.SmallText | None
+		input_urls: DF.SmallText | None
 		metadata: DF.Text | None
 		naming_series: DF.Literal["MCQ-.#."]
 		question: DF.SmallText | None
 		question_status: DF.Link | None
 		source: DF.Data | None
 		subject: DF.Data | None
+		urls: DF.Table[Urls]
 	# end: auto-generated types
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.post_init(self)
+	
+	def validate(self):
+		self.extract_urls()
+
+	def extract_urls(self):
+		extracted_urls = []
+		seen_urls = set()  # To track unique URLs
+		if self.input_urls:
+			lines = self.input_urls.strip().split("\n")
+			for line in lines:
+				match = re.match(r"\[(.*?)\]\((.*?)\)", line.strip())
+				if match:
+					title, url = match.groups()
+					# Check if the URL is unique in both seen_urls and self.urls
+					if url not in seen_urls and url not in [u["url"] for u in self.urls]:
+						extracted_urls.append({"title": title, "url": url})
+						seen_urls.add(url)  # Mark URL as seen
+		if extracted_urls:
+			for url in extracted_urls:
+				# Skip URLs containing "metrack" or "localhost"
+				if "metrack" in url["url"] or "localhost" in url["url"]:
+					continue
+				self.append("urls", url)
+		# Clear input_urls after processing
+		self.input_urls = None
+
 
 	def post_init(self, *args, **kwargs):
 		self.set_user_settings()
   
-	def validate(self):
-		self.clean()
-
 	def check_omr(self):
 		if self.omr == self.answer:
 			self.workflow_state = 'Done'
@@ -62,9 +90,6 @@ class MCQ(Document):
 			as_list=False,
 			alert=True
 		)
-
-	def validate(self):
-		pass
 
 	def clean(self):
 		self.clean_question()
