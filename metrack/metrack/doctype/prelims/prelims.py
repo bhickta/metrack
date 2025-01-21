@@ -28,19 +28,23 @@ class Prelims(Document):
 	def get_mcq(self):
 		fields = ['question', 'a', 'b', 'c', 'd', 'e', 'f', 'explanation']
 		topics = [topic.strip().lower() for topic in self.topic.split(",")]  # Split and clean topics
-		
+
 		query_conditions = []
 		for topic in topics:
 			topic_conditions = [f"LOWER(`{field}`) LIKE %s" for field in fields]
 			query_conditions.append(f"({' OR '.join(topic_conditions)})")  # Group conditions for each topic
-		
+
 		query = f"""
 			SELECT mcq.name, mcq.answer
 			FROM `tabMCQ` mcq
 			WHERE {" OR ".join(query_conditions)}
 		"""
-		
-		values = [f"%{topic}%" for topic in topics for _ in fields]
+
+		# Match exact words using boundaries
+		values = [f"% {topic} %" for topic in topics for _ in fields]  # Word surrounded by spaces
+		values += [f"%{topic} %" for topic in topics for _ in fields]  # Word at the beginning
+		values += [f"% {topic}%" for topic in topics for _ in fields]  # Word at the end
+		# values += [f"%{topic}%" for topic in topics for _ in fields]   # Word as the whole field
 
 		data = frappe.db.sql(query, values, as_dict=1)
 
@@ -52,12 +56,6 @@ class Prelims(Document):
 		for d in data:
 			if d.name not in existing_questions:
 				self.append('items', {"question": d.name, "correct_answer": d.answer})
-    
-	def check_items(self):
-		for item in self.items:
-			if not item.answer:
-				continue
-			item.check = "Right" if item.answer == item.correct_answer else "Wrong"
 
 
 @frappe.whitelist()
@@ -71,6 +69,8 @@ def get_question(question_name):
         "b": question.b,
         "c": question.c,
         "d": question.d,
+        "e": question.e,
+        "f": question.f,
         "explanation": question.explanation,
         "correct_answer": question.answer
     }
