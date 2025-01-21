@@ -44,7 +44,7 @@ class Prelims(Document):
 		values = [f"% {topic} %" for topic in topics for _ in fields]  # Word surrounded by spaces
 		values += [f"%{topic} %" for topic in topics for _ in fields]  # Word at the beginning
 		values += [f"% {topic}%" for topic in topics for _ in fields]  # Word at the end
-		# values += [f"%{topic}%" for topic in topics for _ in fields]   # Word as the whole field
+		values += [f"%{topic}%" for topic in topics for _ in fields]   # Word as the whole field
 
 		data = frappe.db.sql(query, values, as_dict=1)
 
