@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-21 09:39:16.662966",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "url",
+  "column_break_olrx",
+  "title"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "url",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Url"
+  },
+  {
+   "fieldname": "column_break_olrx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 1,
+   "fieldname": "title",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Title"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-01-21 09:52:23.973210",
+ "modified_by": "Administrator",
+ "module": "Metrack",
+ "name": "Urls",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+import re
 
 
 class Prelims(Document):
@@ -14,16 +15,36 @@ class Prelims(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 		from metrack.metrack.doctype.prelims_items.prelims_items import PrelimsItems
+		from metrack.metrack.doctype.urls.urls import Urls
 
 		amended_from: DF.Link | None
 		items: DF.Table[PrelimsItems]
+		paste_urls: DF.Text | None
 		topic: DF.Data
+		urls: DF.Table[Urls]
 	# end: auto-generated types
 	pass
 
 	def validate(self):
 		self.get_mcq()
 		self.check_items()
+		self.extract_urls()
+	
+	def extract_urls(self):
+		extracted_urls = []
+		seen_urls = set()  # To track unique URLs
+		if self.paste_urls:
+			lines = self.paste_urls.strip().split("\n")
+			for line in lines:
+				match = re.match(r"\[(.*?)\]\((.*?)\)", line.strip())
+				if match:
+					title, url = match.groups()
+					if url not in seen_urls and url not in [url.url for url in self.urls]:  # Check if the URL is unique in both seen_urls and self.urls
+						extracted_urls.append({"title": title, "url": url})
+						seen_urls.add(url)  # Mark URL as seen
+		if extracted_urls:
+			for url in extracted_urls:
+				self.append("urls", url)
 
 	def get_mcq(self):
 		def get_topics():
@@ -59,7 +80,6 @@ class Prelims(Document):
 				FROM `tabMCQ` mcq
 				WHERE {query_conditions}
 			"""
-			print(query)
 			return frappe.db.sql(query, values, as_dict=1)
 
 		def append_new_mcqs(data):

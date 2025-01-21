@@ -7,12 +7,15 @@
  "engine": "InnoDB",
  "field_order": [
   "question_container",
+  "column_break_ilgh",
+  "paste_urls",
   "section_break_aqzp",
   "topic",
   "column_break_hyfw",
   "section_break_epcv",
   "items",
-  "amended_from"
+  "amended_from",
+  "urls"
  ],
  "fields": [
   {
@@ -55,12 +58,27 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "urls",
+   "fieldtype": "Table",
+   "label": "Urls",
+   "options": "Urls"
+  },
+  {
+   "fieldname": "column_break_ilgh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "paste_urls",
+   "fieldtype": "Text",
+   "label": "Paste Urls"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-19 19:32:49.069726",
+ "modified": "2025-01-21 09:43:18.220068",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Prelims",
