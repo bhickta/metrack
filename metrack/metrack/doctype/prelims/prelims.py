@@ -26,36 +26,64 @@ class Prelims(Document):
 		self.check_items()
 
 	def get_mcq(self):
+		def get_topics():
+			return [topic.strip().lower() for topic in self.topic.split(",")]
+
+		def build_query_conditions(topics, fields):
+			query_conditions = []
+			values = {}
+			value_index = 0
+
+			for topic in topics:
+				topic_conditions = []
+				for field in fields:
+					patterns = [
+						f"{topic} %",   # Starts with
+						f"% {topic}",   # Ends with
+						f"{topic}"     # Exact match
+					]
+					field_conditions = []
+					for pattern in patterns:
+						placeholder = f"{field}_{value_index}"
+						field_conditions.append(f"LOWER(`{field}`) LIKE %({placeholder})s")
+						values[placeholder] = pattern
+						value_index += 1
+					topic_conditions.append("(" + " OR ".join(field_conditions) + ")")
+				query_conditions.append("(" + " OR ".join(topic_conditions) + ")")
+
+			return " OR ".join(query_conditions), values
+
+		def fetch_mcq_data(query_conditions, values):
+			query = f"""
+				SELECT mcq.name, mcq.answer
+				FROM `tabMCQ` mcq
+				WHERE {query_conditions}
+			"""
+			print(query)
+			return frappe.db.sql(query, values, as_dict=1)
+
+		def append_new_mcqs(data):
+			if not hasattr(self, 'items'):
+				self.items = []
+
+			existing_questions = {item.get("question") for item in self.items}
+
+			for d in data:
+				if d["name"] not in existing_questions:
+					self.append('items', {"question": d["name"], "correct_answer": d["answer"]})
+
+		# Main function logic
 		fields = ['question', 'a', 'b', 'c', 'd', 'e', 'f', 'explanation']
-		topics = [topic.strip().lower() for topic in self.topic.split(",")]  # Split and clean topics
-
-		query_conditions = []
-		for topic in topics:
-			topic_conditions = [f"LOWER(`{field}`) LIKE %s" for field in fields]
-			query_conditions.append(f"({' OR '.join(topic_conditions)})")  # Group conditions for each topic
-
-		query = f"""
-			SELECT mcq.name, mcq.answer
-			FROM `tabMCQ` mcq
-			WHERE {" OR ".join(query_conditions)}
-		"""
-
-		# Match exact words using boundaries
-		values = [f"% {topic} %" for topic in topics for _ in fields]  # Word surrounded by spaces
-		values += [f"%{topic} %" for topic in topics for _ in fields]  # Word at the beginning
-		values += [f"% {topic}%" for topic in topics for _ in fields]  # Word at the end
-		values += [f"%{topic}%" for topic in topics for _ in fields]   # Word as the whole field
-
-		data = frappe.db.sql(query, values, as_dict=1)
-
-		if not hasattr(self, 'items'):
-			self.items = []
-
-		existing_questions = {item.get("question") for item in self.items}
-
-		for d in data:
-			if d.name not in existing_questions:
-				self.append('items', {"question": d.name, "correct_answer": d.answer})
+		topics = get_topics()
+		query_conditions, values = build_query_conditions(topics, fields)
+		data = fetch_mcq_data(query_conditions, values)
+		append_new_mcqs(data)
+    
+	def check_items(self):
+		for item in self.items:
+			if not item.answer:
+				continue
+			item.check = "Right" if item.answer == item.correct_answer else "Wrong"
 
 
 @frappe.whitelist()
