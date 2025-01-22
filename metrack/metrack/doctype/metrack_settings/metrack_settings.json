@@ -1,0 +1,51 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-22 21:32:12.044214",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "per_mcq_interval",
+  "column_break_vnvj",
+  "per_mcq_interval_increment"
+ ],
+ "fields": [
+  {
+   "fieldname": "per_mcq_interval",
+   "fieldtype": "Duration",
+   "label": "Per MCQ Interval"
+  },
+  {
+   "fieldname": "column_break_vnvj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "per_mcq_interval_increment",
+   "fieldtype": "Duration",
+   "label": "Per MCQ Interval Increment"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-01-22 21:34:03.050641",
+ "modified_by": "Administrator",
+ "module": "Metrack",
+ "name": "Metrack Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

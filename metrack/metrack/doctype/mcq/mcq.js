@@ -1,7 +1,13 @@
-// Copyright (c) 2024, nishantbhickta and contributors
-// For license information, please see license.txt
+// Global variable to store the timer interval
+let globalTimerInterval;
+let timerDuration = 0;
 
 frappe.ui.form.on('MCQ', {
+    async get_durations(frm) {
+        frm.per_mcq_interval = await frappe.db.get_single_value('Metrack Settings', 'per_mcq_interval');
+        frm.per_mcq_interval_increment = await frappe.db.get_single_value('Metrack Settings', 'per_mcq_interval_increment');
+    },
+
     refresh(frm) {
         frm.add_custom_button(__('Open All URLs'), () => {
             (frm.doc.urls || []).forEach(row => {
@@ -11,21 +17,10 @@ frappe.ui.form.on('MCQ', {
             });
         }, __('Actions'));
 
-        let timerDuration = 180;
-        let timerElement = frm.dashboard.add_section(`<div id="mcq-timer" style="font-weight: bold; color: red;">Time left: ${formatTime(timerDuration)}</div>`);
-
-        const timerInterval = setInterval(() => {
-            timerDuration--;
-            const timerDisplay = document.getElementById('mcq-timer');
-            if (timerDisplay) {
-                timerDisplay.textContent = `Time left: ${formatTime(timerDuration)}`;
-            }
-
-            if (timerDuration <= 0) {
-                clearInterval(timerInterval);
-                triggerNextQuestion(frm);
-            }
-        }, 1000);
+        frm.events.get_durations(frm).then(() => {
+            timerDuration = frm.per_mcq_interval;
+            setupTimer(frm, timerDuration);
+        });
 
         frm.add_custom_button(
             __('Next'),
@@ -37,6 +32,30 @@ frappe.ui.form.on('MCQ', {
     }
 });
 
+function setupTimer(frm, duration) {
+    // Clear any existing timer
+    if (globalTimerInterval) {
+        clearInterval(globalTimerInterval);
+    }
+
+    timerDuration = duration;
+    frm.dashboard.clear_headline();
+    frm.dashboard.add_section(`<div id="mcq-timer" style="font-weight: bold; color: red;">Time left: ${formatTime(timerDuration)}</div>`);
+
+    globalTimerInterval = setInterval(() => {
+        timerDuration--;
+        const timerDisplay = document.getElementById('mcq-timer');
+        if (timerDisplay) {
+            timerDisplay.textContent = `Time left: ${formatTime(timerDuration)}`;
+        }
+
+        if (timerDuration <= 0) {
+            clearInterval(globalTimerInterval);
+            triggerNextQuestion(frm);
+        }
+    }, 1000);
+}
+
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -47,36 +66,25 @@ function triggerNextQuestion(frm) {
     frappe.confirm(
         __('Are you sure you want to move to the next question?'),
         () => {
-            const nextDocButton = $('.next-doc');
-            nextDocButton.click();
+            // Simulate clicking the next document button if available
+            const nextDocButton = document.querySelector('.next-doc');
+            if (nextDocButton) {
+                nextDocButton.click();
+            } else {
+                frappe.msgprint(__('Next document button not found.'));
+            }
         },
         () => {
-            // If the user clicks "No", reset the timer to 60 seconds
-            resetTimer(frm);
+            // Reset the timer with an increment if user cancels
+            resetTimer(frm, frm.per_mcq_interval_increment);
         }
     );
 }
 
-function resetTimer(frm) {
-    let timerDuration = 60;
-    const timerDisplay = document.getElementById('mcq-timer');
-    if (timerDisplay) {
-        timerDisplay.textContent = `Time left: ${formatTime(timerDuration)}`;
-    }
-
-    const timerInterval = setInterval(() => {
-        timerDuration--;
-        if (timerDisplay) {
-            timerDisplay.textContent = `Time left: ${formatTime(timerDuration)}`;
-        }
-
-        if (timerDuration <= 0) {
-            clearInterval(timerInterval);
-            triggerNextQuestion(frm);
-        }
-    }, 1000);
+function resetTimer(frm, increment) {
+    const newDuration = timerDuration + increment; // Add increment to current duration
+    setupTimer(frm, newDuration);
 }
-
 
 
 class MCQ {
