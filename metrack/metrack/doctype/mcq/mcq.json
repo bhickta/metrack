@@ -10,6 +10,8 @@
   "naming_series",
   "column_break_lope",
   "subject",
+  "selected_answer",
+  "result",
   "section_break_qxqd",
   "question",
   "edit",
@@ -121,6 +123,8 @@
   {
    "fieldname": "question_status",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Question Status",
    "options": "Workflow State"
   },
@@ -166,11 +170,23 @@
    "fieldname": "input_urls",
    "fieldtype": "Small Text",
    "label": "Input Urls"
+  },
+  {
+   "fieldname": "selected_answer",
+   "fieldtype": "Select",
+   "label": "Selected Answer",
+   "options": "\na\nb\nc\nd\ne\nf"
+  },
+  {
+   "fieldname": "result",
+   "fieldtype": "Select",
+   "label": "Result",
+   "options": "Skipped\nRight\nWrong"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-21 19:11:56.679052",
+ "modified": "2025-01-22 21:53:58.535242",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",

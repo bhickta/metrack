@@ -40,6 +40,8 @@ class MCQ(Document):
 		naming_series: DF.Literal["MCQ-.#."]
 		question: DF.SmallText | None
 		question_status: DF.Link | None
+		result: DF.Literal["Skipped", "Right", "Wrong"]
+		selected_answer: DF.Literal["", "a", "b", "c", "d", "e", "f"]
 		source: DF.Data | None
 		subject: DF.Data | None
 		urls: DF.Table[Urls]
@@ -50,6 +52,16 @@ class MCQ(Document):
 	
 	def validate(self):
 		self.extract_urls()
+		self.check_answer()
+	
+	def check_answer(self):
+		print(self.selected_answer)
+		if self.answer == self.selected_answer:
+			self.result = "Right"
+		elif self.selected_answer and self.selected_answer != self.answer:
+			self.result = "Wrong"
+		else:
+			self.result = "Skipped"
 
 	def extract_urls(self):
 		extracted_urls = []
