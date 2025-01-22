@@ -72,6 +72,7 @@ class MCQ(Document):
 				self.append("urls", url)
 		# Clear input_urls after processing
 		self.input_urls = None
+		self.question_status = "Done"
 
 
 	def post_init(self, *args, **kwargs):
