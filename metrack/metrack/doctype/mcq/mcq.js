@@ -43,7 +43,7 @@ function setupTimer(frm, duration) {
     frm.dashboard.add_section(`
         <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: red;">
             <div id="mcq-timer">Time left: ${formatTime(timerDuration)}</div>
-            <div>${__('MCQ Done Today')} ${frm.doc.__onload.mcq_done}</div>
+            <div>${('MCQ Done Today')} ${frm.doc.__onload.mcq_done}</div>
         </div>
     `);   
 
