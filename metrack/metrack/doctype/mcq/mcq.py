@@ -90,6 +90,9 @@ class MCQ(Document):
 	def post_init(self, *args, **kwargs):
 		self.set_user_settings()
   
+	def onload(self):
+		self.set_onload("mcq_done", frappe.db.count("MCQ", filters={"question_status": "Done"}))
+  
 	def check_omr(self):
 		if self.omr == self.answer:
 			self.workflow_state = 'Done'

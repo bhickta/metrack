@@ -22,26 +22,33 @@ frappe.ui.form.on('MCQ', {
             setupTimer(frm, timerDuration);
         });
 
-        frm.add_custom_button(
-            __('Next'),
-            () => {
-                triggerNextQuestion(frm);
-            },
-            __('Actions')
-        ).addClass('btn-primary');
     }
 });
 
 function setupTimer(frm, duration) {
-    // Clear any existing timer
+    // Clear any existing timer interval
     if (globalTimerInterval) {
         clearInterval(globalTimerInterval);
     }
 
-    timerDuration = duration;
-    frm.dashboard.clear_headline();
-    frm.dashboard.add_section(`<div id="mcq-timer" style="font-weight: bold; color: red;">Time left: ${formatTime(timerDuration)}</div>`);
+    // Clear any existing timer section
+    const oldTimerSection = document.getElementById('mcq-timer');
+    if (oldTimerSection) {
+        oldTimerSection.parentElement.remove(); // Remove the parent element that contains the section
+    }
 
+    timerDuration = duration;
+
+    // Add new timer section
+    frm.dashboard.clear_headline();
+    frm.dashboard.add_section(`
+        <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: red;">
+            <div id="mcq-timer">Time left: ${formatTime(timerDuration)}</div>
+            <div>${__('MCQ Done Today')} ${frm.doc.__onload.mcq_done}</div>
+        </div>
+    `);   
+
+    // Set up the interval to update the timer
     globalTimerInterval = setInterval(() => {
         timerDuration--;
         const timerDisplay = document.getElementById('mcq-timer');
@@ -82,7 +89,7 @@ function triggerNextQuestion(frm) {
 }
 
 function resetTimer(frm, increment) {
-    const newDuration = timerDuration + increment; // Add increment to current duration
+    const newDuration = timerDuration + increment;
     setupTimer(frm, newDuration);
 }
 
