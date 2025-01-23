@@ -39,7 +39,6 @@ function setupTimer(frm, duration) {
 
     timerDuration = duration;
 
-    // Add new timer section
     frm.dashboard.clear_headline();
     frm.dashboard.add_section(`
         <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: red;">
