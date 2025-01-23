@@ -7,7 +7,9 @@
  "field_order": [
   "per_mcq_interval",
   "column_break_vnvj",
-  "per_mcq_interval_increment"
+  "per_mcq_interval_increment",
+  "section_break_kmkm",
+  "timers"
  ],
  "fields": [
   {
@@ -23,12 +25,22 @@
    "fieldname": "per_mcq_interval_increment",
    "fieldtype": "Duration",
    "label": "Per MCQ Interval Increment"
+  },
+  {
+   "fieldname": "section_break_kmkm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "timers",
+   "fieldtype": "Table",
+   "label": "Timers",
+   "options": "Doctype Timer"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-01-22 21:34:03.050641",
+ "modified": "2025-01-23 13:35:06.478928",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Metrack Settings",

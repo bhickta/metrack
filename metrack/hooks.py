@@ -10,7 +10,7 @@ app_license = "mit"
 # ------------------
 
 app_include_js = [
-	"prelims.bundle.js",
+	"metrack.bundle.js",
 ]
 
 app_include_css = [

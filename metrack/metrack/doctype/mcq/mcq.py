@@ -55,7 +55,6 @@ class MCQ(Document):
 		self.check_answer()
 	
 	def check_answer(self):
-		print(self.selected_answer)
 		if self.answer == self.selected_answer:
 			self.result = "Right"
 		elif self.selected_answer and self.selected_answer != self.answer:
@@ -91,7 +90,7 @@ class MCQ(Document):
 		self.set_user_settings()
   
 	def onload(self):
-		self.set_onload("mcq_done", frappe.db.count("MCQ", filters={"question_status": "Done", "modified": (">=", frappe.utils.today())}))
+		self.set_onload("done_today", frappe.db.count("MCQ", filters={"question_status": "Done", "modified": (">=", frappe.utils.today())}))
   
 	def check_omr(self):
 		if self.omr == self.answer:

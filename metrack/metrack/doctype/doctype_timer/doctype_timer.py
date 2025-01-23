@@ -5,7 +5,7 @@
 from frappe.model.document import Document
 
 
-class MetrackSettings(Document):
+class DoctypeTimer(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -13,10 +13,14 @@ class MetrackSettings(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
-		from metrack.metrack.doctype.doctype_timer.doctype_timer import DoctypeTimer
 
-		per_mcq_interval: DF.Duration | None
-		per_mcq_interval_increment: DF.Duration | None
-		timers: DF.Table[DoctypeTimer]
+		doc: DF.Link
+		incremental: DF.Duration
+		initial: DF.Duration
+		is_disabled: DF.Check
+		parent: DF.Data
+		parentfield: DF.Data
+		parenttype: DF.Data
+		target: DF.Float
 	# end: auto-generated types
 	pass

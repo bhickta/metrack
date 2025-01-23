@@ -1,6 +1,7 @@
 frappe.provide("metrack");
 import "./navigation.filters.js";
 import "./navigation.panel.js";
+import "./timer.utility.js";
 
 metrack.QuizManager = class QuizManager {
     constructor(frm) {

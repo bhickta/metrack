@@ -1,14 +1,6 @@
-// Global variable to store the timer interval
-let globalTimerInterval;
-let timerDuration = 0;
-
 frappe.ui.form.on('MCQ', {
-    async get_durations(frm) {
-        frm.per_mcq_interval = await frappe.db.get_single_value('Metrack Settings', 'per_mcq_interval');
-        frm.per_mcq_interval_increment = await frappe.db.get_single_value('Metrack Settings', 'per_mcq_interval_increment');
-    },
-
     refresh(frm) {
+        // Add a custom button to open all URLs
         frm.add_custom_button(__('Open All URLs'), () => {
             (frm.doc.urls || []).forEach(row => {
                 if (row.url) {
@@ -16,81 +8,14 @@ frappe.ui.form.on('MCQ', {
                 }
             });
         }, __('Actions'));
-
-        frm.events.get_durations(frm).then(() => {
-            timerDuration = frm.per_mcq_interval;
-            setupTimer(frm, timerDuration);
+        metrack.get_durations(frm).then(() => {
+            const timerUtility = new metrack.TimerUtility(
+                frm
+            );
+            timerUtility.setupTimer();
         });
-
-    }
+    },
 });
-
-function setupTimer(frm, duration) {
-    // Clear any existing timer interval
-    if (globalTimerInterval) {
-        clearInterval(globalTimerInterval);
-    }
-
-    // Clear any existing timer section
-    const oldTimerSection = document.getElementById('mcq-timer');
-    if (oldTimerSection) {
-        oldTimerSection.parentElement.remove(); // Remove the parent element that contains the section
-    }
-
-    timerDuration = duration;
-
-    frm.dashboard.clear_headline();
-    frm.dashboard.add_section(`
-        <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: red;">
-            <div id="mcq-timer">Time left: ${formatTime(timerDuration)}</div>
-            <div>${('MCQ Done Today')} ${frm.doc.__onload.mcq_done}</div>
-        </div>
-    `);   
-
-    // Set up the interval to update the timer
-    globalTimerInterval = setInterval(() => {
-        timerDuration--;
-        const timerDisplay = document.getElementById('mcq-timer');
-        if (timerDisplay) {
-            timerDisplay.textContent = `Time left: ${formatTime(timerDuration)}`;
-        }
-
-        if (timerDuration <= 0) {
-            clearInterval(globalTimerInterval);
-            triggerNextQuestion(frm);
-        }
-    }, 1000);
-}
-
-function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-}
-
-function triggerNextQuestion(frm) {
-    frappe.confirm(
-        __('Are you sure you want to move to the next question?'),
-        () => {
-            // Simulate clicking the next document button if available
-            const nextDocButton = document.querySelector('.next-doc');
-            if (nextDocButton) {
-                nextDocButton.click();
-            } else {
-                frappe.msgprint(__('Next document button not found.'));
-            }
-        },
-        () => {
-            // Reset the timer with an increment if user cancels
-            resetTimer(frm, frm.per_mcq_interval_increment);
-        }
-    );
-}
-
-function resetTimer(frm, increment) {
-    const newDuration = timerDuration + increment;
-    setupTimer(frm, newDuration);
-}
 
 
 class MCQ {

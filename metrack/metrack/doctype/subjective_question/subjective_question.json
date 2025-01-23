@@ -15,13 +15,16 @@
   "section_break_ctjc",
   "url",
   "column_break_dgwk",
+  "input_urls",
   "source",
   "section_break_rfgp",
   "year",
   "column_break_lqxo",
   "exam",
   "section_break_snej",
-  "subjective_question_topic"
+  "subjective_question_topic",
+  "section_break_bjpc",
+  "urls"
  ],
  "fields": [
   {
@@ -107,11 +110,26 @@
    "in_standard_filter": 1,
    "label": "Status",
    "options": "Untouched\nRead\nBrainstormed\nWritten"
+  },
+  {
+   "fieldname": "section_break_bjpc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "urls",
+   "fieldtype": "Table",
+   "label": "Urls",
+   "options": "Urls"
+  },
+  {
+   "fieldname": "input_urls",
+   "fieldtype": "Small Text",
+   "label": "Input Urls"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-18 06:30:35.073544",
+ "modified": "2025-01-23 13:11:29.087634",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Subjective Question",
