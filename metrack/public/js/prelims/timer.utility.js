@@ -4,7 +4,7 @@ metrack.TimerUtility = class TimerUtility {
         this.duration = frm.initial;
         this.increment = frm.increment;
         this.target = frm.target;
-        this.done_today = this.frm.doc.__onload?.done_today
+        this.done_today = this.frm.doc.__onload?.done_today;
         this.timerInterval = null;
     }
 
@@ -76,22 +76,16 @@ metrack.TimerUtility = class TimerUtility {
     }
 
     triggerNextQuestion() {
-        frappe.confirm(
-            __('Are you sure you want to move to the next question?'),
-            () => {
-                const nextDocButton = document.querySelector('.next-doc');
-                if (nextDocButton) {
-                    nextDocButton.click();
-                } else {
-                    frappe.msgprint(__('Next document button not found.'));
-                }
-            },
-            () => {
-                this.resetTimer();
-            }
-        );
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission();
+        }
+        if (Notification.permission === 'granted') {
+            const notification = new Notification('Time Up!', {
+                body: 'Your time is up, please move to the next question.',
+            });
+        }
     }
-}
+};
 
 metrack.get_durations = async function (frm) {
     try {
