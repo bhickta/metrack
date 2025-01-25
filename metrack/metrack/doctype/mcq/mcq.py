@@ -72,7 +72,7 @@ class MCQ(Document):
 				if match:
 					title, url = match.groups()
 					# Check if the URL is unique in both seen_urls and self.urls
-					if url not in seen_urls and url not in [u["url"] for u in self.urls]:
+					if url not in seen_urls and url not in [u.url for u in self.urls]:
 						extracted_urls.append({"title": title, "url": url})
 						seen_urls.add(url)  # Mark URL as seen
 		if extracted_urls:
