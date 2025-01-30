@@ -42,7 +42,7 @@ class MCQ(Document):
 		question_status: DF.Link | None
 		result: DF.Literal["Skipped", "Right", "Wrong"]
 		selected_answer: DF.Literal["", "a", "b", "c", "d", "e", "f"]
-		source: DF.Data | None
+		source: DF.SmallText | None
 		subject: DF.Data | None
 		urls: DF.Table[Urls]
 	# end: auto-generated types
