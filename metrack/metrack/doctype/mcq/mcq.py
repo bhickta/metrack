@@ -52,7 +52,8 @@ class MCQ(Document):
 	
 	def validate(self):
 		self.extract_urls()
-		self.check_answer()
+		if not frappe.flags.in_import:
+			self.check_answer()
 	
 	def check_answer(self):
 		if self.answer == self.selected_answer:
