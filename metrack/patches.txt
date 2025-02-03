@@ -6,4 +6,4 @@
 # Patches added in this section will be executed after doctypes are migrated
 execute:from metrack.patches.create_microtopics_ias_score import execute; execute() #2
 execute:from metrack.patches.mcq_examrobot import execute; execute() #3
-execute:from metrack.patches.reset_mcq import execute; execute() #2
+execute:from metrack.patches.reset_mcq import execute; execute() #3
