@@ -2,9 +2,8 @@ import frappe
 
 def execute():
     query = """
-    UPDATE `tabMCQ` 
-    SET `question_status` = NULL, `result` = NULL
+    DELETE FROM `tabMCQ`
     WHERE source LIKE '%insights%'
     """
-
+    
     frappe.db.sql(query)
