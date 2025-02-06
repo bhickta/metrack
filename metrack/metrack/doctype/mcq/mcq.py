@@ -28,7 +28,7 @@ class MCQ(Document):
 		from frappe.types import DF
 		from metrack.metrack.doctype.urls.urls import Urls
 
-		_user_tags: DF.Autocomplete | None
+		_user_tags: DF.Text | None
 		a: DF.SmallText | None
 		answer: DF.Literal["", "a", "b", "c", "d", "e", "f"]
 		b: DF.SmallText | None

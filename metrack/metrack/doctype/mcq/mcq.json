@@ -189,7 +189,7 @@
   },
   {
    "fieldname": "_user_tags",
-   "fieldtype": "Autocomplete",
+   "fieldtype": "Text",
    "hidden": 1,
    "label": "_User_Tags",
    "read_only": 1
@@ -197,7 +197,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 09:19:22.654147",
+ "modified": "2025-02-06 09:22:01.521435",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",
