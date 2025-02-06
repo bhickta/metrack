@@ -17,20 +17,35 @@ def build_automaton(tags):
 def tag_text(text, automaton):
     return list({tag for _, tag in automaton.iter(text.lower())})
 
+import numpy as np
+import faiss
+import re
+from sentence_transformers import SentenceTransformer
+
+def preprocess_text(text):
+    text = text.lower().strip()
+    text = re.sub(r'[^\w\s]', '', text)
+    return text
+
+def build_embedding_model():
+    return SentenceTransformer("BAAI/bge-large-en")
+
 def build_tag_embeddings(tags, model):
-    return {tag: model.encode(tag.lower(), convert_to_numpy=True) for tag in tags}
+    return {tag: model.encode(preprocess_text(tag), convert_to_numpy=True) for tag in tags}
 
 def build_faiss_index(tag_embeddings):
     embeddings_matrix = np.array(list(tag_embeddings.values()), dtype='float32')
     d = embeddings_matrix.shape[1]
-    index = faiss.IndexFlatL2(d)
+    index = faiss.IndexHNSWFlat(d, 32)
     index.add(embeddings_matrix)
     return index
 
-def tag_text_with_faiss(text, tag_embeddings, faiss_index, model, top_k=10):
-    text_embedding = model.encode(text.lower(), convert_to_numpy=True).reshape(1, -1)
-    D, I = faiss_index.search(text_embedding, k=top_k)
-    return sorted(((list(tag_embeddings.keys())[idx], 1 / (1 + dist)) for idx, dist in zip(I[0], D[0]) if idx != -1), key=lambda x: x[1], reverse=True)
+def softmax(x):
+    e_x = np.exp(x - np.max(x))
+    return e_x / e_x.sum()
 
-def build_embedding_model():
-    return SentenceTransformer('hkunlp/instructor-xl')
+def tag_text_with_faiss(text, tag_embeddings, faiss_index, model, top_k=20):
+    text_embedding = model.encode(preprocess_text(text), convert_to_numpy=True).reshape(1, -1)
+    D, I = faiss_index.search(text_embedding, k=top_k)
+    scores = softmax(np.array([1 / (1 + dist) for dist in D[0] if dist >= 0]))
+    return sorted(((list(tag_embeddings.keys())[idx], score) for idx, score in zip(I[0], scores) if idx != -1), key=lambda x: x[1], reverse=True)

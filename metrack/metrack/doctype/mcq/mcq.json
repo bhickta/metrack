@@ -7,8 +7,9 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "input_urls",
+  "section_break_bvhq",
   "tags",
+  "input_urls",
   "naming_series",
   "column_break_lope",
   "subject",
@@ -200,11 +201,15 @@
    "fieldtype": "Table MultiSelect",
    "label": "Tags",
    "options": "Tags"
+  },
+  {
+   "fieldname": "section_break_bvhq",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 14:39:50.709361",
+ "modified": "2025-02-06 21:19:26.333234",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",

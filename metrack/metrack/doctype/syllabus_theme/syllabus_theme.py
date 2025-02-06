@@ -17,7 +17,6 @@ class SyllabusTheme(Document):
 		naming_series: DF.Literal["UT-.####."]
 		section: DF.Link | None
 		subject: DF.Link | None
-		subtheme: DF.Link | None
 		theme: DF.Link | None
 		topic: DF.Link | None
 	# end: auto-generated types
