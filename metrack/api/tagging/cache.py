@@ -47,7 +47,7 @@ class TaggingCache:
         syllabus = frappe.get_all("Syllabus Theme", fields=["name"], pluck="name")
         for s_name in syllabus:
             s = frappe.get_doc("Syllabus Theme", s_name)
-            for f in ["subject", "topic", "section", "theme", "subtheme"]:
+            for f in ["theme"]:
                 tag = s.get(f, None)
                 if tag:
                     if tag not in self.tags:
