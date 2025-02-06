@@ -26,6 +26,7 @@ class MCQ(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
+		from metrack.metrack.doctype.tags.tags import Tags
 		from metrack.metrack.doctype.urls.urls import Urls
 
 		_user_tags: DF.Text | None
@@ -47,6 +48,7 @@ class MCQ(Document):
 		selected_answer: DF.Literal["", "a", "b", "c", "d", "e", "f"]
 		source: DF.SmallText | None
 		subject: DF.Data | None
+		tags: DF.TableMultiSelect[Tags]
 		urls: DF.Table[Urls]
 	# end: auto-generated types
 	def __init__(self, *args, **kwargs):

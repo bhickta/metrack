@@ -69,7 +69,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-16 20:09:30.211173",
+ "modified": "2025-02-06 14:39:02.523251",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Syllabus Theme",
@@ -90,7 +90,9 @@
   }
  ],
  "search_fields": "subject, section, topic, theme, subtheme",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "theme"
 }

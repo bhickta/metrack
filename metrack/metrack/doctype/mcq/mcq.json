@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "input_urls",
+  "tags",
   "naming_series",
   "column_break_lope",
   "subject",
@@ -193,11 +194,17 @@
    "hidden": 1,
    "label": "_User_Tags",
    "read_only": 1
+  },
+  {
+   "fieldname": "tags",
+   "fieldtype": "Table MultiSelect",
+   "label": "Tags",
+   "options": "Tags"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 09:22:01.521435",
+ "modified": "2025-02-06 14:39:50.709361",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",
