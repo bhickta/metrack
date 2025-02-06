@@ -96,86 +96,16 @@ class MCQ(Document):
 
 	@frappe.whitelist()
 	def set_tags(self):
-		set_tags(self)
+		development = frappe.local.conf.developer_mode or frappe.local.dev_server
+		if not development:
+			return
+		from metrack.api.tagging.faiss import set_tags as _set_tags
+		_set_tags(self)
 		for tag in self.tags:
 			tag = frappe.db.escape(tag[0])
-			print(tag)
+			tag = tag.replace(",", "")
 			self.add_tag(tag)
 
-
-import os
-import pickle
-import frappe
-from metrack.api.tagging import (
-    tag_text_with_faiss,
-    build_embedding_model,
-    build_tag_embeddings,
-    build_faiss_index,
-)
-from frappe.utils import get_site_path
-
-
-class TaggingCache:
-    def __init__(self):
-        self.model = None
-        self.tag_embeddings = None
-        self.faiss_index = None
-        self.tags = None
-        self.cache_dir = get_site_path("private", "tagging_cache")
-        self.cache_file = os.path.join(self.cache_dir, "tagging_cache.pkl")
-        self.model_file = os.path.join(self.cache_dir, "embedding_model.pkl")
-
-    def initialize(self):
-        # Check if cache files exist, if so, load them
-        if not os.path.exists(self.cache_dir):
-            os.makedirs(self.cache_dir)
-
-        # Load precomputed cache if available
-        if os.path.exists(self.cache_file):
-            with open(self.cache_file, "rb") as f:
-                self.tag_embeddings, self.faiss_index = pickle.load(f)
-            if os.path.exists(self.model_file):
-                with open(self.model_file, "rb") as f:
-                    self.model = pickle.load(f)
-                return
-
-        # If not cached, build everything
-        self.model = build_embedding_model()  # Build the model only once
-        self.tags = frappe.get_all("Syllabus Theme", fields=["theme"], pluck="theme")
-        self.tag_embeddings = build_tag_embeddings(self.tags, self.model)  # Precompute embeddings
-        self.faiss_index = build_faiss_index(self.tag_embeddings)  # Build FAISS index
-
-        # Cache the results for future use
-        with open(self.cache_file, "wb") as f:
-            pickle.dump((self.tag_embeddings, self.faiss_index), f)
-        with open(self.model_file, "wb") as f:
-            pickle.dump(self.model, f)
-
-# Global cache instance
-tagging_cache = TaggingCache()
-
-
-@frappe.whitelist()
-def set_tags(self):
-    try:
-        # Initialize the cache (model, embeddings, faiss index) only once
-        tagging_cache.initialize()
-
-        # Use the cached model, embeddings, and faiss index
-        model = tagging_cache.model
-        tag_embeddings = tagging_cache.tag_embeddings
-        faiss_index = tagging_cache.faiss_index
-
-        # Get the question text and get ranked tags
-        text = self.question + " " + self.explanation
-        ranked_tags = tag_text_with_faiss(text, tag_embeddings, faiss_index, model)
-
-        # Optionally, you could save ranked_tags to a database field or return them for later use
-        self.tags = ranked_tags
-
-    except Exception as e:
-        frappe.log_error(f"Error in set_tags: {str(e)}", title="Tagging Error")
-        raise
 
 from datetime import datetime, timedelta
 
