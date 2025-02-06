@@ -50,8 +50,6 @@ class TaggingCache:
             for f in ["subject", "topic", "section", "theme", "subtheme"]:
                 tag = s.get(f, None)
                 if tag:
-                    if tag == "Home Rule Movement (1915–1916)":
-                        print('heheh')
                     if tag not in self.tags:
                         self.tags[tag] = {"origin_name": s_name, "origin_field": f}
         

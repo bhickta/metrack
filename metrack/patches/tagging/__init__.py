@@ -8,8 +8,10 @@ def execute():
         print((idx/total)*100, idx)
         doc = frappe.get_doc('MCQ', mcq)
         _set_tags(doc)
-        for tag in doc.tags:
-            tag = frappe.db.escape(tag[0])
-            tag = tag.replace(",", "")
-            doc.add_tag(tag[0:140])
+        for tag in doc.ranked_tags:
+            doc.append("tags", {
+                "syllabus_theme": tag.get("meta", {}).get("origin_name"),
+                "rank": float(tag.get("tag", ("tag", 0))[1]),
+            })
+            doc.save()
             frappe.db.commit()
