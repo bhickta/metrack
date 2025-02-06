@@ -13,6 +13,7 @@
   "subject",
   "selected_answer",
   "result",
+  "tag",
   "section_break_qxqd",
   "question",
   "edit",
@@ -185,11 +186,16 @@
    "fieldtype": "Select",
    "label": "Result",
    "options": "Skipped\nRight\nWrong"
+  },
+  {
+   "fieldname": "tag",
+   "fieldtype": "Button",
+   "label": "Tag"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 15:45:10.403105",
+ "modified": "2025-02-05 22:47:40.652389",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",
