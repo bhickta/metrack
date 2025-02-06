@@ -28,6 +28,7 @@ class MCQ(Document):
 		from frappe.types import DF
 		from metrack.metrack.doctype.urls.urls import Urls
 
+		_user_tags: DF.Autocomplete | None
 		a: DF.SmallText | None
 		answer: DF.Literal["", "a", "b", "c", "d", "e", "f"]
 		b: DF.SmallText | None
@@ -99,7 +100,7 @@ class MCQ(Document):
 		development = frappe.local.conf.developer_mode or frappe.local.dev_server
 		if not development:
 			return
-		from metrack.api.tagging.faiss import set_tags as _set_tags
+		from metrack.api.tagging.fais import set_tags as _set_tags
 		_set_tags(self)
 		for tag in self.tags:
 			tag = frappe.db.escape(tag[0])

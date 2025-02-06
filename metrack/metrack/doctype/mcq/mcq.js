@@ -22,7 +22,4 @@ frappe.ui.form.on('MCQ', {
         // });
     },
 
-    tag(frm) {
-        frm.call({frm: frm, doc: frm.doc, method: 'set_tags'}, { tag: frm.doc.tag });        
-    },
 });

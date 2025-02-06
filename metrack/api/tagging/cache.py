@@ -35,7 +35,15 @@ class TaggingCache:
 
         # If not cached, build everything
         self.model = build_embedding_model()  # Build the model only once
-        self.tags = frappe.get_all("Syllabus Theme", fields=["theme"], pluck="theme")
+        self.tags = set()
+        syllabus = frappe.get_all("Syllabus Theme", fields=["name"], pluck="name")
+        for s in syllabus:
+            s = frappe.get_doc("Syllabus Theme", s)
+            for f in ["subject", "topic", "section", "theme", "subtheme"]:
+                tag = s.get(f, None)
+                if tag:
+                    tag = tag.replace(",", "")
+                    self.tags.add(tag)
         self.tag_embeddings = build_tag_embeddings(self.tags, self.model)  # Precompute embeddings
         self.faiss_index = build_faiss_index(self.tag_embeddings)  # Build FAISS index
 
