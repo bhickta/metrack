@@ -8,7 +8,6 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_bvhq",
-  "tags",
   "input_urls",
   "naming_series",
   "column_break_lope",
@@ -31,6 +30,7 @@
   "column_break_mswr",
   "question_status",
   "section_break_cjzy",
+  "tags",
   "explanation",
   "source",
   "urls",
@@ -198,7 +198,7 @@
   },
   {
    "fieldname": "tags",
-   "fieldtype": "Table MultiSelect",
+   "fieldtype": "Table",
    "label": "Tags",
    "options": "Tags"
   },
@@ -209,7 +209,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 21:19:26.333234",
+ "modified": "2025-02-06 23:04:07.564667",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "MCQ",

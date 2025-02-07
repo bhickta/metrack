@@ -2,10 +2,10 @@
 import frappe
 def execute():
     from metrack.api.tagging.fais import set_tags as _set_tags
-    clean_tags()
-    mcqs = frappe.get_all("MCQ", pluck="name")
+    mcqs = frappe.get_all("MCQ", pluck="name", filters={"syllabus_theme": ["is", "not set"]})
     total = len(mcqs)
     for idx, mcq in enumerate(mcqs):
+        print(f"({(idx/total)* 100:.2f}), remaining: {total - idx}")
         doc = frappe.get_doc('MCQ', mcq)
         _set_tags(doc)
         doc.tags = []

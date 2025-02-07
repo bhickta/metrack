@@ -48,7 +48,7 @@ class MCQ(Document):
 		selected_answer: DF.Literal["", "a", "b", "c", "d", "e", "f"]
 		source: DF.SmallText | None
 		subject: DF.Data | None
-		tags: DF.TableMultiSelect[Tags]
+		tags: DF.Table[Tags]
 		urls: DF.Table[Urls]
 	# end: auto-generated types
 	def __init__(self, *args, **kwargs):

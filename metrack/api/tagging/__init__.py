@@ -28,7 +28,8 @@ def preprocess_text(text):
     return text
 
 def build_embedding_model():
-    return SentenceTransformer("BAAI/bge-large-en")
+    model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2", device="cpu")
+    return model
 
 def build_tag_embeddings(tags, model):
     return {tag: model.encode(preprocess_text(tag), convert_to_numpy=True) for tag in tags}
