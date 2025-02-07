@@ -1,7 +1,7 @@
 # Copyright (c) 2025, nishantbhickta and contributors
 # For license information, please see license.txt
 
-# import frappe
+import frappe
 from frappe.model.document import Document
 
 
@@ -17,10 +17,15 @@ class DoctypeTimer(Document):
 		doc: DF.Link
 		incremental: DF.Duration
 		initial: DF.Duration
-		is_disabled: DF.Check
+		is_enabled: DF.Check
 		parent: DF.Data
 		parentfield: DF.Data
 		parenttype: DF.Data
 		target: DF.Float
 	# end: auto-generated types
 	pass
+
+@frappe.whitelist()
+def is_timer(doc):
+    is_timer = frappe.db.exists("Doctype Timer", {"doc": doc, "is_enabled": 1})
+    return True if is_timer else False

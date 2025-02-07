@@ -7,11 +7,11 @@
  "engine": "InnoDB",
  "field_order": [
   "doc",
-  "is_disabled",
   "target",
   "column_break_dznw",
   "initial",
-  "incremental"
+  "incremental",
+  "is_enabled"
  ],
  "fields": [
   {
@@ -41,22 +41,22 @@
    "reqd": 1
   },
   {
-   "default": "0",
-   "fieldname": "is_disabled",
-   "fieldtype": "Check",
-   "label": "Is Disabled"
-  },
-  {
    "fieldname": "target",
    "fieldtype": "Float",
    "label": "Target",
    "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_enabled",
+   "fieldtype": "Check",
+   "label": "Is Enabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-01-23 14:14:17.404339",
+ "modified": "2025-02-07 17:48:10.514818",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Doctype Timer",
