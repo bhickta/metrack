@@ -17,18 +17,12 @@ def execute():
             doc.save()
             frappe.db.commit()
 
-def clean_tags():
-    query_1 = f"""
-        UPDATE
-            `tabMCQ` m
-        SET
-            m._user_tags = NULL;
-    """
-    
-    query_2 = f"""
-        DELETE FROM `tabTags`;
-    """
-    
-    for query in [query_1, query_2]:
-        frappe.db.sql(query)
+def reset_mcq_tags():
+    """Set `_user_tags` to NULL in `tabMCQ` table."""
+    frappe.db.sql("UPDATE `tabMCQ` SET _user_tags = NULL;")
+    frappe.db.commit()
+
+def delete_all_tags():
+    """Delete all records from `tabTags` table."""
+    frappe.db.sql("DELETE FROM `tabTags`;")
     frappe.db.commit()
