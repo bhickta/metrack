@@ -9,7 +9,9 @@
   "column_break_vnvj",
   "per_mcq_interval_increment",
   "section_break_kmkm",
-  "timers"
+  "timers",
+  "dsr_tab",
+  "auto_reporting"
  ],
  "fields": [
   {
@@ -35,12 +37,23 @@
    "fieldtype": "Table",
    "label": "Timers",
    "options": "Doctype Timer"
+  },
+  {
+   "fieldname": "dsr_tab",
+   "fieldtype": "Tab Break",
+   "label": "DSR"
+  },
+  {
+   "fieldname": "auto_reporting",
+   "fieldtype": "Table",
+   "label": "Auto Reporting",
+   "options": "Assignment"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-01-23 13:35:06.478928",
+ "modified": "2025-02-10 22:15:31.930682",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Metrack Settings",

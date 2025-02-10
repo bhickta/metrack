@@ -134,6 +134,12 @@ before_uninstall = "metrack.overrides.doctype.doctype.before_uninstall"
 # Scheduled Tasks
 # ---------------
 
+scheduler_events = {
+    "cron": {
+        "01 00 * * *": "metrack.jobs.midnight.execute"
+    }
+}
+
 # scheduler_events = {
 # 	"all": [
 # 		"metrack.tasks.all"

@@ -24,6 +24,16 @@ class DailySelfReporting(Document):
 	# end: auto-generated types
 	pass
 
+	def validate(self):
+		if not self.user or self.user == "User":
+			self.user = frappe.session.user
+		if not self.posting_date:
+			self.posting_date = frappe.utils.now()
+
+	def before_insert(self):
+		if not self.items:
+			self.fetch_default_values()
+
 	@frappe.whitelist()
 	def fetch_default_values(self):
 		for task in assigned_tasks(self.user):

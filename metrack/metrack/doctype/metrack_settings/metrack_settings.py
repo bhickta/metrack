@@ -13,8 +13,10 @@ class MetrackSettings(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
+		from metrack.metrack.doctype.assignment.assignment import Assignment
 		from metrack.metrack.doctype.doctype_timer.doctype_timer import DoctypeTimer
 
+		auto_reporting: DF.Table[Assignment]
 		per_mcq_interval: DF.Duration | None
 		per_mcq_interval_increment: DF.Duration | None
 		timers: DF.Table[DoctypeTimer]
