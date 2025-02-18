@@ -63,9 +63,4 @@ def fetch_article_data(url: str):
     result = get_article_content(url)
     if result:
         return result
-    return {"message": "Failed to extract content."}
-
-if __name__ == "__main__":
-    url = "https://www.drishtiias.com/daily-updates/daily-news-analysis/central-bank-digital-currency-3"
-    result = fetch_article_data(url)
-    print(result.markdown)
+    return None
