@@ -1,13 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 import markdownify
-from readability import Document
+from readabilipy import simple_json_from_html_string
 from fake_useragent import UserAgent
 from tenacity import retry, stop_after_attempt, wait_fixed
+import frappe
+from urllib.parse import urlparse
 
 class Scraper:
-    def __init__(self, **kwargs):
-        self.base_url = kwargs.get('base_url', '').strip()
+    def __init__(self, base_url: str):
+        self.base_url = base_url.strip()
         self.session = requests.Session()
         self.ua = UserAgent()
 
@@ -27,35 +29,43 @@ class Scraper:
         return response.text
 
     def clean_html(self, html):
-        """Clean the HTML by extracting the main content like Firefox's read mode."""
-        doc = Document(html)
-        content = doc.summary()  # Extract the readable content from the page
-        return content
+        content = simple_json_from_html_string(html, use_readability=True)
+        return content.get('content', '')
 
     def parse_content(self, html):
-        """Parse the cleaned content into BeautifulSoup for further processing."""
         cleaned_html = self.clean_html(html)
-        content_soup = BeautifulSoup(cleaned_html, "html.parser")
-        return content_soup
+        return BeautifulSoup(cleaned_html, "html.parser")
 
-    def extract_markdown(self):
-        try:
-            html = self.fetch_page()
-            content_soup = self.parse_content(html)
-            markdown_content = markdownify.markdownify(str(content_soup), heading_style="ATX").strip()
-            return "\n".join(line for line in markdown_content.splitlines() if line.strip())
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching URL: {e}")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-        return None
+    def extract_page_name(self):
+        parsed_url = urlparse(self.base_url)
+        page_name = parsed_url.path.strip("/").split("/")[-1]
+        return page_name.replace("-", " ").title()  # Convert to title case and replace hyphens with spaces
+
+    def extract_markdown(self, html):
+        content_soup = self.parse_content(html)
+        markdown_content = markdownify.markdownify(str(content_soup), heading_style="ATX").strip()
+        return "\n".join(line for line in markdown_content.splitlines() if line.strip())
+
+def get_article_content(url):
+    scraper = Scraper(base_url=url)
+    try:
+        html = scraper.fetch_page()
+        title = scraper.extract_page_name()  # Using page name from URL as title
+        markdown = scraper.extract_markdown(html)
+        return frappe._dict({'title': title, 'markdown': markdown})
+    except requests.exceptions.RequestException as e:
+        frappe.log_error(f"Error fetching URL: {e}")
+    except Exception as e:
+        frappe.log_error(f"An error occurred: {e}")
+    return None
+
+def fetch_article_data(url: str):
+    result = get_article_content(url)
+    if result:
+        return result
+    return {"message": "Failed to extract content."}
 
 if __name__ == "__main__":
-    url = "https://www.insightsonindia.com/ancient-indian-history/post-gupta-age/chalukyas/"  # Replace with your URL
-    scraper = Scraper(base_url=url)
-    markdown = scraper.extract_markdown()
-
-    if markdown:
-        print(markdown)
-    else:
-        print("Failed to extract content.")
+    url = "https://www.drishtiias.com/daily-updates/daily-news-analysis/central-bank-digital-currency-3"
+    result = fetch_article_data(url)
+    print(result.markdown)
