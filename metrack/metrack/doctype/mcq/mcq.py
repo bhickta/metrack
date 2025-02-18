@@ -14,6 +14,7 @@ import frappe.model.utils.user_settings
 import frappe.utils
 import re
 from dataclasses import dataclass
+from metrack.api.scraping.markdown import get_article_content
 
 import frappe.data
 # from metrack.api.scraping.core.insight_ias import QuizScraper
@@ -86,6 +87,9 @@ class MCQ(Document):
 				# Skip URLs containing "metrack" or "localhost"
 				if "metrack" in url["url"] or "localhost" in url["url"]:
 					continue
+				markdown = get_article_content(url["url"])
+				if markdown:
+					url["markdown"] = markdown.markdown
 				self.append("urls", url)
 		# Clear input_urls after processing
 		self.input_urls = None

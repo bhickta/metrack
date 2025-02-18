@@ -14,6 +14,7 @@ class Urls(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		markdown: DF.MarkdownEditor | None
 		parent: DF.Data
 		parentfield: DF.Data
 		parenttype: DF.Data
