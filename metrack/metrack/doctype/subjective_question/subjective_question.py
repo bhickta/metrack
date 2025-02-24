@@ -14,15 +14,14 @@ class SubjectiveQuestion(Document):
 
     if TYPE_CHECKING:
         from frappe.types import DF
-        from metrack.metrack.doctype.subjective_question_theme.subjective_question_theme import SubjectiveQuestionTheme
         from metrack.metrack.doctype.urls.urls import Urls
 
         exam: DF.Link | None
         input_urls: DF.SmallText | None
+        metadata: DF.JSON | None
         naming_series: DF.Literal["Q-.#."]
         source: DF.Data | None
         status: DF.Literal["Untouched", "Read", "Brainstormed", "Written"]
-        subjective_question_topic: DF.Table[SubjectiveQuestionTheme]
         title: DF.Text
         url: DF.SmallText | None
         urls: DF.Table[Urls]

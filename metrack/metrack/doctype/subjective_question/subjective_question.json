@@ -21,10 +21,10 @@
   "year",
   "column_break_lqxo",
   "exam",
-  "section_break_snej",
-  "subjective_question_topic",
   "section_break_bjpc",
-  "urls"
+  "urls",
+  "section_break_fdky",
+  "metadata"
  ],
  "fields": [
   {
@@ -51,12 +51,6 @@
    "options": "Exam"
   },
   {
-   "fieldname": "subjective_question_topic",
-   "fieldtype": "Table",
-   "label": "Subjective Question Theme",
-   "options": "Subjective Question Theme"
-  },
-  {
    "fieldname": "url",
    "fieldtype": "Small Text",
    "label": "Url"
@@ -68,10 +62,6 @@
   {
    "fieldname": "column_break_lqxo",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_snej",
-   "fieldtype": "Section Break"
   },
   {
    "fieldname": "section_break_ctjc",
@@ -125,11 +115,20 @@
    "fieldname": "input_urls",
    "fieldtype": "Small Text",
    "label": "Input Urls"
+  },
+  {
+   "fieldname": "section_break_fdky",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "metadata",
+   "fieldtype": "JSON",
+   "label": "Metadata"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-23 13:11:29.087634",
+ "modified": "2025-02-24 21:57:38.438584",
  "modified_by": "Administrator",
  "module": "Metrack",
  "name": "Subjective Question",
